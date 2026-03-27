@@ -1,0 +1,44 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="row mb-4">
+        <div class="col-12 col-md-6 col-lg-4 mx-auto">
+
+            <h3 class="mb-2 text-center text-color-theme">Make your booking</h3>
+
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" formControlName="noOfTicket" required>
+                <label>No of Ticket *</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="" formControlName="customerName" required>
+                <label>Customer Name *</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="" formControlName="customerMobileNo" required>
+                <label>Customer Mobile No *</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" placeholder="" formControlName="customerEmail">
+                <label>Customer Email</label>
+            </div>
+
+            <div class="mb-3">
+                <h5>Total Amt : ₹ {{ totalAmount }}</h5>
+            </div>
+
+            <button type="submit" class="btn btn-default btn-lg w-100" [disabled]="form.invalid">
+                Submit
+            </button>
+
+            <!-- Response Message -->
+            <div *ngIf="responseMessage" class="alert mt-3" [ngClass]="isSuccess ? 'alert-success' : 'alert-danger'">
+                {{ responseMessage }}
+            </div>
+
+        </div>
+    </div>
+
+</form>
