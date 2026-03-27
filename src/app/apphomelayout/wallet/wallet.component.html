@@ -8,16 +8,16 @@
                 </figure>
             </div>
             <div class="col px-0 align-self-center">
-                <p class="mb-0 text-color-theme">Maxartkiller</p>
-                <p class="text-muted size-12">New York City, US</p>
+                <p class="mb-0 text-color-theme">{{ (username$ | async) | uppercase}}</p>
+                <p class="text-muted size-12">{{ mobile$ | async }}</p>
             </div>
             <div class="col-auto">
-                <a routerLink="/addmoney" class="btn btn-44 btn-light shadow-sm">
+                <!-- <a routerLink="/addmoney" class="btn btn-44 btn-light shadow-sm">
                     <i class="bi bi-plus-circle"></i>
                 </a>
                 <a routerLink="/withdraw" class="btn btn-44 btn-default shadow-sm ms-1">
                     <i class="bi bi-arrow-down-circle"></i>
-                </a>
+                </a> -->
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
 </div>
 
 <!-- summary -->
-<div class="row mb-3">
+<!-- <div class="row mb-3">
     <div class="col-6 col-md-4">
         <div class="card shadow-sm mb-2">
             <div class="card-body">
@@ -65,10 +65,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- tabs structure -->
-<ul class="nav nav-pills nav-justified tabs mb-3" id="assetstabs" role="tablist">
+<!-- <ul class="nav nav-pills nav-justified tabs mb-3" id="assetstabs" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#cards" type="button"
             role="tab" aria-controls="cards" aria-selected="true">Cards</button>
@@ -77,12 +77,12 @@
         <button class="nav-link" id="currency-tab" data-bs-toggle="tab" data-bs-target="#currency" type="button"
             role="tab" aria-controls="currency" aria-selected="false">Currency</button>
     </li>
-</ul>
+</ul> -->
 
 <div class="tab-content" id="assetstabsContent">
     <div class="tab-pane fade show active" id="cards" role="tabpanel">
         <!-- swiper credit cards -->
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
             <div class="col-12 px-0">
                 <swiper class="cardswiper" [slidesPerView]="'auto'" [spaceBetween]="0" [pagination]="false">
                     <ng-template swiperSlide>
@@ -168,15 +168,15 @@
                     </ng-template>
                 </swiper>
             </div>
-        </div>
+        </div> -->
 
         <!-- Transactions -->
         <div class="row mb-3">
             <div class="col">
-                <h6 class="title">Transactions</h6>
+                <h6 class="title">Wallet History</h6>
             </div>
             <div class="col-auto">
-                <a routerLink="/" class="small">Add Card</a>
+                <a routerLink="/" class="small"></a>
             </div>
         </div>
         <div class="row mb-4">
