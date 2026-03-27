@@ -24,13 +24,25 @@
                 <input type="email" class="form-control" placeholder="" formControlName="customerEmail">
                 <label>Customer Email</label>
             </div>
+            <div class="form-floating mb-3">
+                <select class="form-control" id="payment" formControlName="paymentStatus" required>
+                    <option value="" disabled>Select Payment</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Paid">Paid</option>
+                </select>
+                <label for="payment">Payment</label>
+            </div>
 
             <div class="mb-3">
                 <h5>Total Amt : ₹ {{ totalAmount }}</h5>
             </div>
 
-            <button type="submit" class="btn btn-default btn-lg w-100" [disabled]="form.invalid">
-                Submit
+            <button
+                type="submit"
+                class="btn btn-default btn-lg w-100"
+                [disabled]="form.invalid || isSubmitting"
+            >
+                {{ isSubmitting ? 'Submitting...' : 'Submit' }}
             </button>
 
             <!-- Response Message -->

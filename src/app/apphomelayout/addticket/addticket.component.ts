@@ -6,7 +6,7 @@ import { TicketService } from 'src/app/appinnerlayout/blogdetails/services/ticke
 import { getAuthId } from 'src/app/authlayout/state/auth.selectors';
 import { MrpTicket } from 'src/app/models/ticket.model';
 import { TicketsService } from './service/tickets.service';
-import { take } from 'rxjs/operators';
+import { finalize, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-addticket',
@@ -28,6 +28,7 @@ export class AddticketComponent implements OnInit {
 
   responseMessage = '';
   isSuccess = false;
+  isSubmitting = false;
 
   userId$ = this.store.select(getAuthId);
 
@@ -38,6 +39,7 @@ export class AddticketComponent implements OnInit {
       customerName: ['', Validators.required],
       customerMobileNo: ['', Validators.required],
       customerEmail: [''],
+      paymentStatus: ['Pending', Validators.required],
     });
 
     const ticketId = this.route.snapshot.paramMap.get('ticket');
@@ -67,7 +69,13 @@ export class AddticketComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.isSubmitting) return;
     if (this.form.invalid) return;
+    if (!this.ticket?.id) {
+      this.isSuccess = false;
+      this.responseMessage = 'Ticket details not loaded. Please try again.';
+      return;
+    }
 
     const confirmSubmit = window.confirm(
       `Confirm booking?\nTotal Amount: ₹${this.totalAmount}`,
@@ -76,28 +84,41 @@ export class AddticketComponent implements OnInit {
     if (!confirmSubmit) return;
 
     this.userId$.pipe(take(1)).subscribe((userId) => {
+      if (!userId) {
+        this.isSuccess = false;
+        this.responseMessage = 'User session not found. Please sign in again.';
+        return;
+      }
+
+      this.responseMessage = '';
+      this.isSuccess = false;
+      this.isSubmitting = true;
+
       const payload = {
         ...this.form.value,
         ticketId: this.ticket.id,
         totalAmount: this.totalAmount,
-        userId: this.userId$,
+        userId,
       };
 
-      this.ticketsService.addTicke(payload).subscribe({
-        next: (res) => {
-          this.isSuccess = res.status === 200;
-          this.responseMessage = "Submited";
-          if (this.isSuccess) {
-            this.form.reset();
-            this.totalAmount = 0;
-          }
-        },
-        error: (err) => {
-          console.error(err);
-          this.isSuccess = false;
-          this.responseMessage = 'Server error. Please try again.';
-        },
-      });
+      this.ticketsService
+        .addTicke(payload)
+        .pipe(finalize(() => (this.isSubmitting = false)))
+        .subscribe({
+          next: (res) => {
+            this.isSuccess = res.status === 200;
+            this.responseMessage = res.message || '';
+            if (this.isSuccess) {
+              this.form.reset();
+              this.totalAmount = 0;
+            }
+          },
+          error: (err) => {
+            console.error(err);
+            this.isSuccess = false;
+            this.responseMessage = 'Server error. Please try again.';
+          },
+        });
     });
   }
 }
