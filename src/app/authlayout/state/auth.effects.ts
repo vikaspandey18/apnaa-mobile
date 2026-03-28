@@ -9,7 +9,7 @@ import {
   logoutAction,
 } from './auth.actions';
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -76,7 +76,8 @@ export class AuthEffect {
         const user = this.authService.getUserFromLocalStorage();
 
         if (!user) {
-          return of(loginFailedAction({ error: 'Failed to Auto Login' }));
+          // return of(loginFailedAction({ error: 'Failed to Auto Login' }));
+          return EMPTY;
         }
 
         return of(loginSuccessAction({ auth: user, redirect: false }));
