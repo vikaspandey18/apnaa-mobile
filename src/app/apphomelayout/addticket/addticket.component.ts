@@ -63,7 +63,7 @@ export class AddticketComponent implements OnInit {
 
   calculateTotal() {
     const qty = this.form.get('noOfTicket')?.value || 0;
-    const price = Number(this.ticket?.mrp || 0);
+    const price = Number(this.ticket?.rate || 0);
 
     this.totalAmount = qty * price;
   }

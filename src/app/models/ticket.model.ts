@@ -3,10 +3,12 @@ export interface TicketRespone {
   total_tickets?: number;
   title?: string;
   mrp?: string;
+  rate?: string;
   sold_tickets?: number;
 }
 
 export interface MrpTicket {
   id: number;
-  mrp: number; // or string if API sends string
+  mrp: number;
+  rate: number; // or string if API sends string
 }
