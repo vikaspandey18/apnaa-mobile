@@ -175,7 +175,7 @@
     </div>
 </div>
 <div class="row mb-4">
-    
+
     <div class="col-12 col-md-4 col-lg-6">
         <div class="card">
             <div class="card-body">
@@ -220,78 +220,36 @@
 </div>
 <div class="row mb-4">
     <div class="col-12 px-0">
+        <div *ngIf="transacLoading$ | async">
+            Loading transactions...
+        </div>
+        <div *ngIf="transacError$ | async as error">
+            {{ error }}
+        </div>
+
         <ul class="list-group list-group-flush bg-none">
-            <li class="list-group-item">
+
+            <li class="list-group-item" *ngFor="let item of (latestTransaction$ | async)">
                 <div class="row">
                     <div class="col-auto">
                         <div class="avatar avatar-50 shadow rounded-10 ">
-                            <img src="assets/img/company4.jpg" alt="">
+                            <img [src]="item.eventImage ? item.imageUrl : 'assets/favicon.png' " alt="">
                         </div>
                     </div>
                     <div class="col align-self-center ps-0">
-                        <p class="text-color-theme mb-0">Zomato</p>
-                        <p class="text-muted size-12">Food</p>
+                        <p class="text-color-theme mb-0">{{ item.eventTitle }}</p>
+                        <p class="text-muted size-12">{{item.customerName}}</p>
                     </div>
                     <div class="col align-self-center text-end">
-                        <p class="mb-0">-25.00</p>
-                        <p class="text-muted size-12">Debit Card 4545</p>
+                        <p class="mb-0">{{item.rate}}</p>
+                        <p class="text-muted size-12">{{item.createDate}}</p>
                     </div>
                 </div>
             </li>
 
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="avatar avatar-50 shadow rounded-10">
-                            <img src="assets/img/company5.png" alt="">
-                        </div>
-                    </div>
-                    <div class="col align-self-center ps-0">
-                        <p class="text-color-theme mb-0">Uber</p>
-                        <p class="text-muted size-12">Travel</p>
-                    </div>
-                    <div class="col align-self-center text-end">
-                        <p class="mb-0">-26.00</p>
-                        <p class="text-muted size-12">Debit Card 4545</p>
-                    </div>
-                </div>
-            </li>
 
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="avatar avatar-50 shadow rounded-10">
-                            <img src="assets/img/company1.png" alt="">
-                        </div>
-                    </div>
-                    <div class="col align-self-center ps-0">
-                        <p class="text-color-theme mb-0">Starbucks</p>
-                        <p class="text-muted size-12">Food</p>
-                    </div>
-                    <div class="col align-self-center text-end">
-                        <p class="mb-0">-18.00</p>
-                        <p class="text-muted size-12">Cash</p>
-                    </div>
-                </div>
-            </li>
 
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-auto">
-                        <div class="avatar avatar-50 shadow rounded-10">
-                            <img src="assets/img/company3.jpg" alt="">
-                        </div>
-                    </div>
-                    <div class="col align-self-center ps-0">
-                        <p class="text-color-theme mb-0">Walmart</p>
-                        <p class="text-muted size-12">Clothing</p>
-                    </div>
-                    <div class="col align-self-center text-end">
-                        <p class="mb-0">-105.00</p>
-                        <p class="text-muted size-12">Wallet</p>
-                    </div>
-                </div>
-            </li>
+
         </ul>
     </div>
 </div>

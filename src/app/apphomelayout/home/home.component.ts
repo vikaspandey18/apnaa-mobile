@@ -6,6 +6,7 @@ import {
   getAuthMobileState,
   getAuthNameState,
 } from 'src/app/authlayout/state/auth.selectors';
+import { TransacResponse } from 'src/app/models/transac.model';
 
 import SwiperCore, {
   Navigation,
@@ -13,6 +14,12 @@ import SwiperCore, {
   Scrollbar,
   A11y,
 } from 'swiper/core';
+import {
+  selectErrorTransac,
+  selectLatestBookings,
+  selectLoadingTransac,
+} from '../alltransaction/state/transac.selectors';
+import { loadLatestBookings } from '../alltransaction/state/transac.actions';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
@@ -27,14 +34,21 @@ export class HomeComponent implements OnInit {
 
   username$!: Observable<string | null>;
   mobile$!: Observable<string | null>;
+  latestTransaction$!: Observable<TransacResponse[] | []>;
+  transacLoading$!: Observable<boolean>;
+  transacError$!: Observable<string | null>;
 
   ngOnInit(): void {
-    
+    this.store.dispatch(loadLatestBookings());
+
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);
+
+    this.latestTransaction$ = this.store.select(selectLatestBookings);
+    this.transacLoading$ = this.store.select(selectLoadingTransac);
+    this.transacError$ = this.store.select(selectErrorTransac);
   }
 
-  ngAfterInit() {}
   doCheck() {
     let html = document.getElementsByTagName('html')[0];
     this.isChecked = !this.isChecked;

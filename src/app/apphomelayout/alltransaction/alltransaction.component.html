@@ -1,21 +1,27 @@
 <!-- list data request money -->
+<div *ngIf="transacLoading$ | async">
+    Loading transactions...
+</div>
+<div *ngIf="transacError$ | async as error">
+    {{ error }}
+</div>
 <div class="row">
     <div class="col">
-        <div class="card mb-3">
+        <div class="card mb-3" *ngFor="let item of (latestTransaction$ | async)">
             <div class="card-body">
                 <div class="row">
                     <div class="col-auto">
                         <div class="avatar avatar-44 shadow-sm rounded-10">
-                            <img src="assets/img/user3.jpg" alt="">
+                            <img [src]="item.eventImage ? item.imageUrl : 'assets/favicon.png' " alt="">
                         </div>
                     </div>
                     <div class="col align-self-center ps-0">
-                        <p class="small mb-1"><a routerLink="/profile" class="fw-medium">Shelvey</a> <span
-                                class="text-muted">request send</span></p>
-                        <p>150 <span class="text-muted">$</span> <small class="text-muted">1 min ago</small>
-                        </p>
+                        <p class="text-color-theme mb-0">{{ item.eventTitle }}</p>
+                        <p class="text-muted size-12">{{item.customerName}}</p>
                     </div>
-                    <div class="col-auto">
+                    <div class="col-auto align-self-center text-end">
+                        <p class="mb-0">{{item.rate}}</p>
+                        <p class="text-muted size-12">{{item.createDate}}</p>
                         <!-- <button class="btn btn-44 btn-light text-danger shadow-sm">
                             <i class="bi bi-trash"></i>
                         </button> -->
