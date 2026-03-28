@@ -68,7 +68,7 @@ import { Thankyou3Component } from './appinnerlayout/thankyou3/thankyou3.compone
 import { Thankyou4Component } from './appinnerlayout/thankyou4/thankyou4.component';
 import { AddmoneyComponent } from './appinnerlayout/addmoney/addmoney.component';
 import { AboutusComponent } from './appinnerlayout/aboutus/aboutus.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { AppEffect, AppReducer } from './store/app.state';
@@ -77,6 +77,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AlltransactionComponent } from './apphomelayout/alltransaction/alltransaction.component';
 import { AddticketComponent } from './apphomelayout/addticket/addticket.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -145,7 +146,6 @@ FullCalendarModule.registerPlugins([
     AboutusComponent,
     AlltransactionComponent,
     AddticketComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -165,7 +165,13 @@ FullCalendarModule.registerPlugins([
       logOnly: environment.production,
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
