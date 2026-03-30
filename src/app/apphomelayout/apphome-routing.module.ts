@@ -17,6 +17,7 @@ import { AlltransactionComponent } from './alltransaction/alltransaction.compone
 import { AuthguardGuard } from '../authlayout/services/authguard.guard';
 import { AddticketComponent } from './addticket/addticket.component';
 import { SuccessComponent } from './success/success.component';
+import { SubpromotersComponent } from './subpromoters/subpromoters.component';
 
 const routes: Routes = [
   {
@@ -83,6 +84,10 @@ const routes: Routes = [
       {
         path: 'success',
         component: SuccessComponent,
+      },
+      {
+        path: 'subpromoters',
+        component: SubpromotersComponent,
       },
     ],
   },
