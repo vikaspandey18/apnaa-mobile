@@ -83,6 +83,16 @@
         <!-- swiper users connections -->
         <swiper class="connectionwiper" [slidesPerView]="'auto'" [spaceBetween]="0" [pagination]="false">
             <ng-template swiperSlide>
+                <a routerLink="/addPromoter" class="card text-center">
+                    <div class="card-body">
+                        <figure class="avatar avatar-50 mb-1 rounded-10">
+                            <i class="bi bi-plus-lg" style="font-size:25px"></i>
+                        </figure>
+                        <p class="text-color-theme size-12 small">Add</p>
+                    </div>
+                </a>
+            </ng-template>
+            <ng-template swiperSlide>
                 <a routerLink="/profile" class="card text-center">
                     <div class="card-body">
                         <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
