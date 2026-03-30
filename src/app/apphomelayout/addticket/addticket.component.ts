@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TicketService } from 'src/app/appinnerlayout/blogdetails/services/ticket.service';
 import { getAuthId } from 'src/app/authlayout/state/auth.selectors';
@@ -20,6 +20,7 @@ export class AddticketComponent implements OnInit {
     private ticketService: TicketService,
     private store: Store,
     private ticketsService: TicketsService,
+    private router: Router,
   ) {}
 
   form!: FormGroup;
@@ -112,6 +113,7 @@ export class AddticketComponent implements OnInit {
             if (this.isSuccess) {
               this.form.reset();
               this.totalAmount = 0;
+              this.router.navigate(['success']);
             }
           },
           error: (err) => {

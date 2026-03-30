@@ -78,6 +78,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AlltransactionComponent } from './apphomelayout/alltransaction/alltransaction.component';
 import { AddticketComponent } from './apphomelayout/addticket/addticket.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { SuccessComponent } from './apphomelayout/success/success.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -146,6 +147,7 @@ FullCalendarModule.registerPlugins([
     AboutusComponent,
     AlltransactionComponent,
     AddticketComponent,
+    SuccessComponent,
   ],
   imports: [
     BrowserModule,

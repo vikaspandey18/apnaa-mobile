@@ -16,6 +16,7 @@ import { BlogdetailsComponent } from '../appinnerlayout/blogdetails/blogdetails.
 import { AlltransactionComponent } from './alltransaction/alltransaction.component';
 import { AuthguardGuard } from '../authlayout/services/authguard.guard';
 import { AddticketComponent } from './addticket/addticket.component';
+import { SuccessComponent } from './success/success.component';
 
 const routes: Routes = [
   {
@@ -77,8 +78,12 @@ const routes: Routes = [
       },
       {
         path: 'addticket/:ticket',
-        component:AddticketComponent
-      }
+        component: AddticketComponent,
+      },
+      {
+        path: 'success',
+        component: SuccessComponent,
+      },
     ],
   },
 ];
