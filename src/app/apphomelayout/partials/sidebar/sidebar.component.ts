@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { logoutAction } from 'src/app/authlayout/state/auth.actions';
 import {
+  getAuthCreditAmt,
   getAuthMobileState,
   getAuthNameState,
 } from 'src/app/authlayout/state/auth.selectors';
@@ -17,10 +18,12 @@ export class SidebarComponent implements OnInit {
 
   username$!: Observable<string | null>;
   mobile$!: Observable<string | null>;
+  creditAmt$!: Observable<number>;
 
   ngOnInit(): void {
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);
+    this.creditAmt$ = this.store.select(getAuthCreditAmt);
   }
 
   logout() {

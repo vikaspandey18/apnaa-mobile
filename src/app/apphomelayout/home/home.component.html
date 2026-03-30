@@ -29,8 +29,8 @@
                 <div class="row">
                     <div class="col-12">
                         <h4 class="fw-normal mb-2">
-                            150540.00
-                            <span class="small text-muted">INR</span>
+                            {{ (creditAmt$ | async) | currency:'INR':'symbol':'1.2-2':'en-IN'}}
+                            <span class="small text-muted"></span>
                         </h4>
                         <!-- <p class="mb-0 text-muted size-12">10141 0021 0001 0154</p>
                         <p class="text-muted size-12">Debit Card</p> -->

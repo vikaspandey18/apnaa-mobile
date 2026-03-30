@@ -24,6 +24,13 @@ export const getAuthId = createSelector(getAuthFeatureSelector, (state) => {
   return state.auth?.id;
 });
 
+export const getAuthCreditAmt = createSelector(
+  getAuthFeatureSelector,
+  (state) => {
+    return state.auth?.credit_amt || 0;
+  },
+);
+
 export const getAuthLoadingState = createSelector(
   getAuthFeatureSelector,
   (state) => {

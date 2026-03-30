@@ -26,7 +26,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <h1 class="display-4">100.00</h1>
+                                <h1 class="display-4">
+                                    {{ (creditAmt$ | async) | currency:'INR':'symbol':'1.2-2':'en-IN'}}
+                                </h1>
                             </div>
                             <div class="col-auto">
                                 <p class="text-muted">Wallet Balance</p>

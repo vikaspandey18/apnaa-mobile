@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { getLoggedUser } from 'src/app/authlayout/state/auth.actions';
 import {
+  getAuthCreditAmt,
   getAuthMobileState,
   getAuthNameState,
 } from 'src/app/authlayout/state/auth.selectors';
@@ -37,12 +38,14 @@ export class HomeComponent implements OnInit {
   latestTransaction$!: Observable<TransacResponse[] | []>;
   transacLoading$!: Observable<boolean>;
   transacError$!: Observable<string | null>;
+  creditAmt$!: Observable<number>;
 
   ngOnInit(): void {
     this.store.dispatch(loadLatestBookings());
 
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);
+    this.creditAmt$ = this.store.select(getAuthCreditAmt);
 
     this.latestTransaction$ = this.store.select(selectLatestBookings);
     this.transacLoading$ = this.store.select(selectLoadingTransac);

@@ -16,7 +16,7 @@
             </div>
 
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" placeholder="" formControlName="customerMobileNo" required>
+                <input type="number" class="form-control" placeholder="" formControlName="customerMobileNo" required>
                 <label>Customer Mobile No *</label>
             </div>
 
@@ -32,16 +32,16 @@
                 </select>
                 <label for="payment">Payment</label>
             </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="" formControlName="notes">
+                <label>Customer Notes</label>
+            </div>
 
             <div class="mb-3">
                 <h5>Total Amt : ₹ {{ totalAmount }}</h5>
             </div>
 
-            <button
-                type="submit"
-                class="btn btn-default btn-lg w-100"
-                [disabled]="form.invalid || isSubmitting"
-            >
+            <button type="submit" class="btn btn-default btn-lg w-100" [disabled]="form.invalid || isSubmitting">
                 {{ isSubmitting ? 'Submitting...' : 'Submit' }}
             </button>
 

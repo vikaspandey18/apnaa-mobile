@@ -14,16 +14,17 @@
                 <div class="row">
                     <div class="col-auto">
                         <div class="avatar avatar-44 shadow-sm rounded-10">
-                            <img src="assets/img/user3.jpg" alt="">
+                            <img src="assets/img/icons.png" alt="">
                         </div>
                     </div>
                     <div class="col align-self-center ps-0">
                         <p class="mb-0 fw-medium">{{ ticket.title }}</p>
                         <p class="mb-0"><span class="text-muted">Avl Ticket : {{getAvailableTickets(ticket)}}</span></p>
-                        <p class="mb-0">₹ <del>{{ticket.mrp}}</del> {{ticket.rate}} <small class="text-muted"></small></p>
+                        <p class="mb-0">₹ <del>{{ticket.mrp}}</del> {{ticket.rate}} <small class="text-muted"></small>
+                        </p>
                     </div>
                     <div class="col-auto">
-                        <a [routerLink]="['/addticket',ticket.id]" class="btn btn-44 btn-light text-danger shadow-sm">
+                        <a [routerLink]="['/addticket',ticket.id]" class="btn btn-44 text-danger">
                             <i class="bi bi-plus-circle-fill fs-1"></i>
                         </a>
                     </div>
