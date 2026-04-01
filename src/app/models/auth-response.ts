@@ -3,4 +3,6 @@ export interface AuthResponse {
   name?: string;
   mobile?: string;
   credit_amt?: number;
+  image?: string;
+  email?:string;
 }
