@@ -21,6 +21,7 @@ import {
   selectLoadingTransac,
 } from '../alltransaction/state/transac.selectors';
 import { loadLatestBookings } from '../alltransaction/state/transac.actions';
+import { loadPromoterStartAction } from '../subpromoters/state/promoter.actions';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadLatestBookings());
+    this.store.dispatch(loadPromoterStartAction());
 
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);

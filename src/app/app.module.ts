@@ -80,6 +80,8 @@ import { AddticketComponent } from './apphomelayout/addticket/addticket.componen
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { SuccessComponent } from './apphomelayout/success/success.component';
 import { SubpromotersComponent } from './apphomelayout/subpromoters/subpromoters.component';
+import { AddpromoterComponent } from './apphomelayout/subpromoters/addpromoter/addpromoter.component';
+import { AllpromotersComponent } from './apphomelayout/subpromoters/allpromoters/allpromoters.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -149,7 +151,9 @@ FullCalendarModule.registerPlugins([
     AlltransactionComponent,
     AddticketComponent,
     SuccessComponent,
-    SubpromotersComponent
+    SubpromotersComponent,
+    AddpromoterComponent,
+    AllpromotersComponent
   ],
   imports: [
     BrowserModule,

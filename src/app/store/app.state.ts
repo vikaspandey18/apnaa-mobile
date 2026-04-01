@@ -1,6 +1,9 @@
 import { TransacEffects } from '../apphomelayout/alltransaction/state/transac.effects';
 import { transacReducer } from '../apphomelayout/alltransaction/state/transac.reducer';
 import { TransacState } from '../apphomelayout/alltransaction/state/transac.state';
+import { PromoterEffect } from '../apphomelayout/subpromoters/state/promoter.effects';
+import { promoterReducer } from '../apphomelayout/subpromoters/state/promoter.reducer';
+import { PromoterState } from '../apphomelayout/subpromoters/state/promoter.state';
 import { EventEffect } from '../appinnerlayout/blog/state/event.effects';
 import { eventReducer } from '../appinnerlayout/blog/state/event.reducer';
 import { EventState } from '../appinnerlayout/blog/state/event.state';
@@ -16,6 +19,7 @@ export interface AppState {
   event: EventState;
   ticket: TicketState;
   alltransaction: TransacState;
+  promoters:PromoterState
 }
 
 export const AppReducer = {
@@ -23,6 +27,7 @@ export const AppReducer = {
   events: eventReducer,
   tickets: ticketReducer,
   transac: transacReducer,
+  promoter:promoterReducer
 };
 
 export const AppEffect = [
@@ -30,4 +35,5 @@ export const AppEffect = [
   EventEffect,
   TicketEffect,
   TransacEffects,
+  PromoterEffect
 ];

@@ -8,25 +8,12 @@
                 </figure>
             </div>
             <div class="col px-0 align-self-center">
-                <h3 class="mb-0 text-color-theme">Maxartkiller</h3>
-                <p class="text-muted ">New York City, US</p>
+                <h3 class="mb-0 text-color-theme">{{username$ | async}}</h3>
+                <p class="text-muted ">{{mobile$ | async}}</p>
             </div>
         </div>
     </div>
-    <div class="card-body">
-        <p class="text-muted mb-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sollicitudin dignissim
-            nisi, eget malesuada ligula ultricies sit amet. Suspendisse efficitur ex eu est placerat mattis.
-        </p>
-        <div class="row">
-            <div class="col d-grid">
-                <button class="btn btn-default btn-lg shadow-sm">Invite</button>
-            </div>
-            <div class="col d-grid">
-                <a routerLink="/chat" class="btn btn-light btn-lg shadow-sm">Chat</a>
-            </div>
-        </div>
-    </div>
+
 </div>
 
 <!-- followers and connections -->
@@ -112,79 +99,79 @@
     </div>
 </div>
 
- <!-- summary swiper carousel -->
- <div class="row">
+<!-- summary swiper carousel -->
+<div class="row">
     <div class="col-12 px-0">
         <swiper class="summayswiper" [slidesPerView]="'auto'" [spaceBetween]="0" [pagination]="false">
-                <ng-template swiperSlide>
-                    <div class="card shadow-sm mb-4 alert-primary">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <div class="avatar avatar-40 bg-primary text-white rounded-circle">
-                                        <i class="bi bi-clock"></i>
-                                    </div>
+            <ng-template swiperSlide>
+                <div class="card shadow-sm mb-4 alert-primary">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="avatar avatar-40 bg-primary text-white rounded-circle">
+                                    <i class="bi bi-clock"></i>
                                 </div>
-                                <div class="col px-0">
-                                    <h6 class="mb-0">+155</h6>
-                                    <p class="text-muted small">Hours</p>
-                                </div>
+                            </div>
+                            <div class="col px-0">
+                                <h6 class="mb-0">+155</h6>
+                                <p class="text-muted small">Hours</p>
                             </div>
                         </div>
                     </div>
-                </ng-template>
-                <ng-template swiperSlide>
-                    <div class="card shadow-sm mb-4 alert-warning">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <div class="avatar avatar-40 bg-warning text-white rounded-circle">
-                                        <i class="bi bi-cpu"></i>
-                                    </div>
+                </div>
+            </ng-template>
+            <ng-template swiperSlide>
+                <div class="card shadow-sm mb-4 alert-warning">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="avatar avatar-40 bg-warning text-white rounded-circle">
+                                    <i class="bi bi-cpu"></i>
                                 </div>
-                                <div class="col px-0">
-                                    <h6 class="mb-0">+365</h6>
-                                    <p class="text-muted small">Processing</p>
-                                </div>
+                            </div>
+                            <div class="col px-0">
+                                <h6 class="mb-0">+365</h6>
+                                <p class="text-muted small">Processing</p>
                             </div>
                         </div>
                     </div>
-                </ng-template>
-                <ng-template swiperSlide>
-                    <div class="card shadow-sm mb-4 alert-success">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <div class="avatar avatar-40 bg-success text-white rounded-circle">
-                                        <i class="bi bi-folder"></i>
-                                    </div>
+                </div>
+            </ng-template>
+            <ng-template swiperSlide>
+                <div class="card shadow-sm mb-4 alert-success">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="avatar avatar-40 bg-success text-white rounded-circle">
+                                    <i class="bi bi-folder"></i>
                                 </div>
-                                <div class="col px-0">
-                                    <h6 class="mb-0">+658</h6>
-                                    <p class="text-muted small">Pojects</p>
-                                </div>
+                            </div>
+                            <div class="col px-0">
+                                <h6 class="mb-0">+658</h6>
+                                <p class="text-muted small">Pojects</p>
                             </div>
                         </div>
                     </div>
-                </ng-template>
-                <ng-template swiperSlide>
-                    <div class="card shadow-sm mb-4 alert-danger">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <div class="avatar avatar-40 bg-danger text-white rounded-circle">
-                                        <i class="bi bi-bar-chart"></i>
-                                    </div>
+                </div>
+            </ng-template>
+            <ng-template swiperSlide>
+                <div class="card shadow-sm mb-4 alert-danger">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="avatar avatar-40 bg-danger text-white rounded-circle">
+                                    <i class="bi bi-bar-chart"></i>
                                 </div>
-                                <div class="col px-0">
-                                    <h6 class="mb-0">+248</h6>
-                                    <p class="text-muted small">Complete</p>
-                                </div>
+                            </div>
+                            <div class="col px-0">
+                                <h6 class="mb-0">+248</h6>
+                                <p class="text-muted small">Complete</p>
                             </div>
                         </div>
                     </div>
-                </ng-template>
-            </swiper>
+                </div>
+            </ng-template>
+        </swiper>
     </div>
 </div>
 

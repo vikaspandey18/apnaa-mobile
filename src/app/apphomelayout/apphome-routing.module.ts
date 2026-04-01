@@ -18,6 +18,7 @@ import { AuthguardGuard } from '../authlayout/services/authguard.guard';
 import { AddticketComponent } from './addticket/addticket.component';
 import { SuccessComponent } from './success/success.component';
 import { SubpromotersComponent } from './subpromoters/subpromoters.component';
+import { AddpromoterComponent } from './subpromoters/addpromoter/addpromoter.component';
 
 const routes: Routes = [
   {
@@ -88,6 +89,10 @@ const routes: Routes = [
       {
         path: 'subpromoters',
         component: SubpromotersComponent,
+      },
+      {
+        path: 'addpromoter',
+        component: AddpromoterComponent,
       },
     ],
   },
