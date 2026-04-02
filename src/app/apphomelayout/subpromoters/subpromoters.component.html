@@ -1,6 +1,6 @@
 <!-- Search -->
 <div class="form-group form-floating mb-3">
-    <input type="text" class="form-control " id="search" placeholder="Search">
+    <input type="text" class="form-control" id="search" placeholder="Search" (input)="onSearch($event)">
     <label class="form-control-label" for="search">Search User</label>
     <button type="button" class="text-color-theme tooltip-btn">
         <i class="bi bi-search"></i>
@@ -18,7 +18,7 @@
     </div>
     <div class="col-12 px-0">
         <div class="list-group rounded-0 bg-none">
-            <a class="list-group-item" *ngFor="let promoter of allPromoters$ | async"
+            <a class="list-group-item" *ngFor="let promoter of filteredPromoters$ | async"
                 [routerLink]="['/messages', promoter.id]">
                 <div class="row">
 
