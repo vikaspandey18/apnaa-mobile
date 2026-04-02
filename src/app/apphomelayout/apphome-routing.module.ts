@@ -94,10 +94,6 @@ const routes: Routes = [
         path: 'addpromoter',
         component: AddpromoterComponent,
       },
-      {
-        path: 'addbalance/:id',
-        component: BlogdetailsComponent,
-      },
     ],
   },
 ];

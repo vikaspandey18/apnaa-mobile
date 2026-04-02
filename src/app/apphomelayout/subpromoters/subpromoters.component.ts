@@ -53,4 +53,19 @@ export class SubpromotersComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     this.searchTerm$.next(input.value);
   }
+
+  openModal() {
+    // this.selectedPromoter = promoter;
+
+    const modal = new (window as any).bootstrap.Modal(
+      document.getElementById('addBalanceModal'),
+    );
+    modal.show();
+  }
+
+  closeModal() {
+    const modalEl = document.getElementById('addBalanceModal');
+    const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
+    modal.hide();
+  }
 }
