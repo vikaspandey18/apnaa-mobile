@@ -6,4 +6,6 @@ export interface PromoterModel {
   credit_amt?: string;
   commission_percent?: string;
   promoter_id?: string;
+  image?:string;
+  imageUrl?:string;
 }

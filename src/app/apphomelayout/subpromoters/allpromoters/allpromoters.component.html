@@ -32,7 +32,7 @@
                 <a [routerLink]="['/profile', promoter.id]" class="card text-center">
                     <div class="card-body">
                         <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
-                            <img src="assets/img/user4.jpg" alt="">
+                            <img [src]="promoter.image ? promoter.imageUrl : 'assets/img/user1.jpg'" alt="">
                         </figure>
                         <p class="text-color-theme size-12 small">{{ promoter.name }}</p>
                     </div>
