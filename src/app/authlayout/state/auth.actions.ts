@@ -19,3 +19,18 @@ export const loginFailedAction = createAction(
 export const logoutAction = createAction('[auth] logout');
 
 export const getLoggedUser = createAction('[auth] get logged user');
+
+export const updateUserStartAction = createAction(
+  '[user] update start',
+  props<{ formData: FormData }>(),
+);
+
+export const updateUserSuccessAction = createAction(
+  '[user] update success',
+  props<{ auth: AuthResponse; message: string }>(),
+);
+
+export const updateUserFailedAction = createAction(
+  '[user] update failed',
+  props<{ error: string }>(),
+);

@@ -5,6 +5,9 @@ import {
   loginStartAction,
   loginSuccessAction,
   logoutAction,
+  updateUserFailedAction,
+  updateUserStartAction,
+  updateUserSuccessAction,
 } from './auth.actions';
 
 export const authReducer = createReducer(
@@ -31,5 +34,24 @@ export const authReducer = createReducer(
       error: action.error,
     };
   }),
+  on(updateUserStartAction, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+
+  on(updateUserSuccessAction, (state, action) => ({
+    ...state,
+    auth: action.auth,
+    loading: false,
+    error: null,
+  })),
+
+  on(updateUserFailedAction, (state, action) => ({
+    ...state,
+    loading: false,
+    error: action.error,
+  })),
+  
   on(logoutAction, (state, action) => initialState),
 );

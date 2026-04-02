@@ -3,7 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TicketService } from 'src/app/appinnerlayout/blogdetails/services/ticket.service';
-import { getAuthId } from 'src/app/authlayout/state/auth.selectors';
+import {
+  getAuthCreditAmt,
+  getAuthId,
+} from 'src/app/authlayout/state/auth.selectors';
 import { MrpTicket } from 'src/app/models/ticket.model';
 import { TicketsService } from './service/tickets.service';
 import { finalize, take } from 'rxjs/operators';
@@ -30,8 +33,10 @@ export class AddticketComponent implements OnInit {
   responseMessage = '';
   isSuccess = false;
   isSubmitting = false;
+  hasInsufficientCredit = false;
 
   userId$ = this.store.select(getAuthId);
+  credit_amt$ = this.store.select(getAuthCreditAmt);
 
   ngOnInit(): void {
     // ✅ Create form
@@ -68,6 +73,10 @@ export class AddticketComponent implements OnInit {
     const price = Number(this.ticket?.rate || 0);
 
     this.totalAmount = qty * price;
+
+    this.credit_amt$.pipe(take(1)).subscribe((credit) => {
+      this.hasInsufficientCredit = this.totalAmount > (credit || 0);
+    });
   }
 
   onSubmit() {

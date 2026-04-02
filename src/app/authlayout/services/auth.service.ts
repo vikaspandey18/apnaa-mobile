@@ -25,6 +25,7 @@ export class AuthService {
 
   storeUserInLocalStorate(auth: AuthResponse) {
     try {
+      localStorage.removeItem('apnaaAuth');
       localStorage.setItem('apnaaAuth', JSON.stringify(auth));
     } catch (e) {
       console.log('There was error in saving data to localstorage');
@@ -47,7 +48,6 @@ export class AuthService {
     }
   }
 
-
   logout() {
     try {
       localStorage.removeItem('apnaaAuth');
@@ -56,5 +56,8 @@ export class AuthService {
     }
   }
 
-  
+  updateUser(formData: FormData): Observable<ApiResposne<AuthResponse>> {
+    const url = `${this.baseUrl}/auth/profile.php`;
+    return this.http.post<ApiResposne<AuthResponse>>(url, formData);
+  }
 }

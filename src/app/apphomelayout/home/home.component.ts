@@ -6,6 +6,7 @@ import {
   getAuthCreditAmt,
   getAuthMobileState,
   getAuthNameState,
+  getAuthState,
 } from 'src/app/authlayout/state/auth.selectors';
 import { TransacResponse } from 'src/app/models/transac.model';
 
@@ -22,6 +23,7 @@ import {
 } from '../alltransaction/state/transac.selectors';
 import { loadLatestBookings } from '../alltransaction/state/transac.actions';
 import { loadPromoterStartAction } from '../subpromoters/state/promoter.actions';
+import { AuthResponse } from 'src/app/models/auth-response';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
@@ -34,8 +36,10 @@ export class HomeComponent implements OnInit {
 
   constructor(private store: Store) {}
 
+  auth$!: Observable<AuthResponse | null>;
   username$!: Observable<string | null>;
   mobile$!: Observable<string | null>;
+  
   latestTransaction$!: Observable<TransacResponse[] | []>;
   transacLoading$!: Observable<boolean>;
   transacError$!: Observable<string | null>;
@@ -44,6 +48,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(loadLatestBookings());
     this.store.dispatch(loadPromoterStartAction());
+
+    this.auth$ = this.store.select(getAuthState);
 
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);

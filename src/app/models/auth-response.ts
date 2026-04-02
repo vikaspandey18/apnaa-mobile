@@ -4,5 +4,6 @@ export interface AuthResponse {
   mobile?: string;
   credit_amt?: number;
   image?: string;
-  email?:string;
+  email?: string;
+  photoUrl?: string;
 }

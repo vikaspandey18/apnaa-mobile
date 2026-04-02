@@ -6,7 +6,9 @@ import {
   getAuthCreditAmt,
   getAuthMobileState,
   getAuthNameState,
+  getAuthState,
 } from 'src/app/authlayout/state/auth.selectors';
+import { AuthResponse } from 'src/app/models/auth-response';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,11 +18,15 @@ import {
 export class SidebarComponent implements OnInit {
   constructor(private store: Store) {}
 
+  auth$!: Observable<AuthResponse | null>;
+
   username$!: Observable<string | null>;
   mobile$!: Observable<string | null>;
   creditAmt$!: Observable<number>;
 
   ngOnInit(): void {
+    this.auth$ = this.store.select(getAuthState);
+
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);
     this.creditAmt$ = this.store.select(getAuthCreditAmt);

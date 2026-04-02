@@ -22,11 +22,11 @@ export class PromoterEffect {
   getAllPromoter$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadPromoterStartAction),
-      concatLatestFrom(() => this.store.select(selectAllPromoter)),
-      switchMap(([action, promoters]) => {
-        if (promoters.length > 0) {
-          return of(loadPromoterSuccessAction({ promoters }));
-        }
+      // concatLatestFrom(() => this.store.select(selectAllPromoter)),
+      switchMap((action) => {
+        // if (promoters.length > 0) {
+        //   return of(loadPromoterSuccessAction({ promoters }));
+        // }
         return this.promoterServices.getPromoters().pipe(
           map((response) => {
             return loadPromoterSuccessAction({ promoters: response.data });

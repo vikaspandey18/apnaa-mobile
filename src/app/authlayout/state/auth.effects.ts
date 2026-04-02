@@ -7,6 +7,9 @@ import {
   loginStartAction,
   loginSuccessAction,
   logoutAction,
+  updateUserFailedAction,
+  updateUserStartAction,
+  updateUserSuccessAction,
 } from './auth.actions';
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 import { EMPTY, of } from 'rxjs';
@@ -84,4 +87,39 @@ export class AuthEffect {
       }),
     );
   });
+
+  updateUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateUserStartAction),
+      switchMap((action) => {
+        return this.authService.updateUser(action.formData).pipe(
+          map((response) => {
+            this.authService.storeUserInLocalStorate(response.data);
+            return updateUserSuccessAction({
+              auth: response.data,
+              message: response.message,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              updateUserFailedAction({
+                error: error.error.message || error.message,
+              }),
+            );
+          }),
+        );
+      }),
+    );
+  });
+
+  updateUserSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(updateUserSuccessAction),
+        tap(() => {
+          alert('Profile updated successfully ✅');
+        }),
+      ),
+    { dispatch: false },
+  );
 }

@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { updateUserStartAction } from 'src/app/authlayout/state/auth.actions';
 import {
+  getAuthErrorState,
+  getAuthLoadingState,
   getAuthMobileState,
   getAuthNameState,
   getAuthState,
@@ -34,11 +32,14 @@ export class ProfileComponent implements OnInit {
   mobile$!: Observable<string | null>;
   auth$!: Observable<AuthResponse | null>;
 
-  isSubmitted!:boolean;
+  loading$!: Observable<boolean>;
+  error$!: Observable<string | null>;
+
+  isSubmitted!: boolean;
 
   profileForm!: FormGroup;
 
-  selectedFile!: File;
+  selectedFile: File | null = null;
   previewUrl: string | null = null;
 
   ngOnInit(): void {
@@ -47,6 +48,9 @@ export class ProfileComponent implements OnInit {
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);
 
+    this.loading$ = this.store.select(getAuthLoadingState);
+    this.error$ = this.store.select(getAuthErrorState);
+
     this.profileForm = new FormGroup({
       name: new FormControl('', Validators.required),
       mobile: new FormControl(
@@ -54,8 +58,6 @@ export class ProfileComponent implements OnInit {
         Validators.required,
       ),
       email: new FormControl('', [Validators.required, Validators.email]),
-      // password: new FormControl(''),
-      // confirmPassword: new FormControl(''),
     });
 
     this.auth$.pipe(take(1)).subscribe((authData) => {
@@ -70,13 +72,6 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    // const { password, confirmPassword } = this.profileForm.value;
-
-    // if (password !== confirmPassword) {
-    //   alert('Passwords do not match');
-    //   return;
-    // }
-
     if (this.profileForm.valid) {
       const formValue = this.profileForm.getRawValue();
 
@@ -86,8 +81,6 @@ export class ProfileComponent implements OnInit {
       formData.append('name', formValue.name || '');
       formData.append('mobile', formValue.mobile || '');
       formData.append('email', formValue.email || '');
-      // formData.append('password', formValue.password || '');
-      // formData.append('confirmPassword', formValue.confirmPassword || '');
 
       // 🔥 append file
       if (this.selectedFile) {
@@ -95,7 +88,7 @@ export class ProfileComponent implements OnInit {
       }
 
       // 🔥 dispatch action
-      // this.store.dispatch(updateUserStartAction({ formData }));
+      this.store.dispatch(updateUserStartAction({ formData }));
     }
   }
 
