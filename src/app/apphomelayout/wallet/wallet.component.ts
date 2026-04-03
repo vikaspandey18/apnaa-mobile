@@ -5,11 +5,13 @@ import {
   getAuthCreditAmt,
   getAuthMobileState,
   getAuthNameState,
+  getAuthState,
 } from 'src/app/authlayout/state/auth.selectors';
 import { WalletService } from './service/wallet.service';
 import { WalletHistoryModel } from 'src/app/models/wallert-history.model';
 import { catchError, finalize } from 'rxjs/operators';
 import { updateCreditAmt } from 'src/app/authlayout/state/auth.actions';
+import { AuthResponse } from 'src/app/models/auth-response';
 
 @Component({
   selector: 'app-wallet',
@@ -23,6 +25,7 @@ export class WalletComponent implements OnInit {
   ) {}
 
   username$!: Observable<string | null>;
+  auth$!: Observable<AuthResponse | null>;
   mobile$!: Observable<string | null>;
   creditAmt$!: Observable<number>;
 
@@ -32,6 +35,8 @@ export class WalletComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(updateCreditAmt());
+
+    this.auth$ = this.store.select(getAuthState);
 
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);
