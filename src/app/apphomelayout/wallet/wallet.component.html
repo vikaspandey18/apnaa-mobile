@@ -29,6 +29,30 @@
     </div>
 </div>
 
+<!-- coupon code-->
+<div class="row">
+    <div class="col-12 mb-2" *ngIf='isLoading'>
+        Loading....
+    </div>
+    <div class="col-12 mb-2 text-danger" *ngIf='isError'>
+        {{ isError }}
+    </div>
+    <div class="col-12 mb-2" *ngFor="let history of walletHistory">
+        <div class="form-group form-floating is-valid">
+            <input type="text" class="form-control" placeholder="Coupon Code"
+                [value]="history?.amount | currency:'INR':'symbol':'1.2-2':'en-IN'" readonly>
+            <label class="form-control-label" for="coupon">{{ history?.createDate | date:'medium' }}</label>
+            <div class=" tooltip-btn">
+                <span class="tag text-white border-0 py-1 px-2 float-end mt-1"
+                    [ngClass]="history?.type === 'credit' ? 'bg-success' : 'bg-danger'">
+                    {{ history?.type }}
+                </span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
 <!-- summary -->
 <!-- <div class="row mb-3">
     <div class="col-6 col-md-4">

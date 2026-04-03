@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   getAuthCreditAmt,
   getAuthMobileState,
   getAuthNameState,
 } from 'src/app/authlayout/state/auth.selectors';
+import { WalletService } from './service/wallet.service';
+import { WalletHistoryModel } from 'src/app/models/wallert-history.model';
+import { catchError, finalize } from 'rxjs/operators';
+import { updateCreditAmt } from 'src/app/authlayout/state/auth.actions';
 
 @Component({
   selector: 'app-wallet',
@@ -13,15 +17,41 @@ import {
   styleUrls: ['./wallet.component.scss'],
 })
 export class WalletComponent implements OnInit {
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private walletService: WalletService,
+  ) {}
 
   username$!: Observable<string | null>;
   mobile$!: Observable<string | null>;
   creditAmt$!: Observable<number>;
 
+  isLoading = false;
+  isError: string | null = null;
+  walletHistory: WalletHistoryModel[] | [];
+
   ngOnInit(): void {
+    this.store.dispatch(updateCreditAmt());
+
     this.username$ = this.store.select(getAuthNameState);
     this.mobile$ = this.store.select(getAuthMobileState);
     this.creditAmt$ = this.store.select(getAuthCreditAmt);
+
+    this.isLoading = true;
+
+    this.walletService
+      .getAllTransactionsHistory()
+      .pipe(
+        catchError((err) => {
+          this.isError = err?.error?.message || 'Something went wrong';
+          return of({ data: [] });
+        }),
+        finalize(() => {
+          this.isLoading = false;
+        }),
+      )
+      .subscribe((res) => {
+        this.walletHistory = res?.data ?? [];
+      });
   }
 }

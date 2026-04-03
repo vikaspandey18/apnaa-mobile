@@ -60,4 +60,10 @@ export class AuthService {
     const url = `${this.baseUrl}/auth/profile.php`;
     return this.http.post<ApiResposne<AuthResponse>>(url, formData);
   }
+
+  getCreditAmt(): Observable<ApiResposne<AuthResponse>> {
+    const url = `${this.baseUrl}/auth/getCredit.php`;
+    return this.http.get<ApiResposne<AuthResponse>>(url);
+  }
+
 }

@@ -42,7 +42,8 @@
                         </p>
                     </div>
                     <div class="col-auto align-self-center">
-                        <button type="button" class="float-end small btn btn-danger text-light" (click)="openModal()">
+                        <button type="button" class="float-end small btn btn-danger text-light"
+                            (click)="openModal(promoter)">
                             Add
                         </button>
                     </div>
@@ -56,26 +57,45 @@
     </div>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="addBalanceModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
 
+            <!-- Header -->
             <div class="modal-header">
                 <h5 class="modal-title">Add Balance</h5>
                 <button type="button" class="btn-close" (click)="closeModal()"></button>
             </div>
 
-            <div class="modal-body">
-                <!-- <p><strong>Name:</strong> {{ selectedPromoter?.name }}</p>
-                <p><strong>Mobile:</strong> {{ selectedPromoter?.mobile }}</p> -->
+            <!-- Body -->
+            <div class="modal-body" *ngIf="selectedPromoter">
+                <p><strong>Name:</strong> {{ selectedPromoter.name }}</p>
+                <p><strong>Mobile:</strong> {{ selectedPromoter.mobile }}</p>
 
-                <input type="number" class="form-control" placeholder="Enter amount">
+                <form [formGroup]="balanceForm">
+                    <input type="number" class="form-control" placeholder="Enter amount" formControlName="amount" />
+
+                    <div *ngIf="balanceForm.get('amount')?.touched && balanceForm.get('amount')?.invalid"
+                        class="text-danger mt-1">
+                        Valid amount required
+                    </div>
+                </form>
             </div>
 
+            <div *ngIf="modalSuccess" class="alert alert-success m-3">
+                {{ modalSuccess }}
+            </div>
+
+            <div *ngIf="modalError" class="alert alert-danger m-3">
+                {{ modalError }}
+            </div>
+
+            <!-- Footer -->
             <div class="modal-footer">
                 <button class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-                <button class="btn btn-primary">Submit</button>
+                <button class="btn btn-primary" [disabled]="balanceForm.invalid || modalLoading" (click)="submit()">
+                    {{ modalLoading ? 'Submitting...' : 'Submit' }}
+                </button>
             </div>
 
         </div>

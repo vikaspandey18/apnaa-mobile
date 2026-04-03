@@ -5,6 +5,7 @@ import {
   loginStartAction,
   loginSuccessAction,
   logoutAction,
+  updateCreditAmtSuccessAction,
   updateUserFailedAction,
   updateUserStartAction,
   updateUserSuccessAction,
@@ -52,6 +53,13 @@ export const authReducer = createReducer(
     loading: false,
     error: action.error,
   })),
-  
+
   on(logoutAction, (state, action) => initialState),
+
+  on(updateCreditAmtSuccessAction, (state, action) => ({
+    ...state,
+    auth: action.auth,
+    loading: false,
+    error: null,
+  })),
 );

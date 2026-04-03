@@ -20,4 +20,13 @@ export class PromoterService {
     const url = `${environment.apiUrl}/promoter/getPromoter.php`;
     return this.http.get<ApiResposne<PromoterModel[]>>(url);
   }
+
+  addBalance(
+    promoterId: string,
+    amount: number,
+  ): Observable<ApiResposne<null>> {
+    const url = `${environment.apiUrl}/promoter/addBalance.php`;
+    const body = { promoterId, amount };
+    return this.http.post<ApiResposne<null>>(url, body);
+  }
 }

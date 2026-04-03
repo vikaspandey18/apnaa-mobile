@@ -9,6 +9,8 @@ import {
 } from './state/promoter.selectors';
 import { loadPromoterStartAction } from './state/promoter.actions';
 import { map } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PromoterService } from './services/promoter.service';
 
 @Component({
   selector: 'app-subpromoters',
@@ -16,7 +18,11 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./subpromoters.component.scss'],
 })
 export class SubpromotersComponent implements OnInit {
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store,
+    private fb: FormBuilder,
+    private promoterService: PromoterService,
+  ) {}
 
   allPromoters$!: Observable<PromoterModel[] | []>;
   loading$!: Observable<boolean>;
@@ -25,12 +31,23 @@ export class SubpromotersComponent implements OnInit {
   private searchTerm$ = new BehaviorSubject<string>('');
   filteredPromoters$!: Observable<PromoterModel[] | []>;
 
+  selectedPromoter: PromoterModel | null = null;
+  balanceForm!: FormGroup;
+
+  private modalInstance: any;
+
+  modalLoading = false;
+  modalError: string | null = null;
+  modalSuccess: string | null = null;
+
   ngOnInit(): void {
     this.store.dispatch(loadPromoterStartAction());
 
     this.allPromoters$ = this.store.select(selectAllPromoter);
     this.loading$ = this.store.select(selectPromoterLoading);
     this.error$ = this.store.select(selectPromoterError);
+
+    this.initForm();
 
     // combine search term with promoters list
     this.filteredPromoters$ = combineLatest([
@@ -49,23 +66,56 @@ export class SubpromotersComponent implements OnInit {
     );
   }
 
+  initForm() {
+    this.balanceForm = this.fb.group({
+      amount: ['', [Validators.required, Validators.min(1)]],
+    });
+  }
+
   onSearch(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.searchTerm$.next(input.value);
   }
 
-  openModal() {
-    // this.selectedPromoter = promoter;
+  openModal(promoter: PromoterModel): void {
+    this.selectedPromoter = promoter;
+    this.balanceForm.reset();
 
-    const modal = new (window as any).bootstrap.Modal(
-      document.getElementById('addBalanceModal'),
-    );
-    modal.show();
+    const modalEl = document.getElementById('addBalanceModal');
+    this.modalInstance = new bootstrap.Modal(modalEl);
+    this.modalInstance.show();
+
+    this.modalError = null;
+    this.modalSuccess = null;
   }
 
   closeModal() {
-    const modalEl = document.getElementById('addBalanceModal');
-    const modal = (window as any).bootstrap.Modal.getInstance(modalEl);
-    modal.hide();
+    this.modalInstance?.hide();
+  }
+
+  submit(): void {
+    if (this.balanceForm.invalid || !this.selectedPromoter) return;
+
+    this.modalLoading = true;
+
+    const amount = this.balanceForm.value.amount;
+    const promoterId = this.selectedPromoter.id;
+
+    if (promoterId && amount) {
+      this.promoterService.addBalance(promoterId, amount).subscribe({
+        next: (response) => {
+          this.modalSuccess = response.message;
+        },
+        error: (err) => {
+          this.modalError =
+            err?.error?.message || 'An error occurred while adding balance.';
+        },
+        complete: () => {
+          this.modalLoading = false;
+        },
+      });
+
+      // this.closeModal();
+    }
   }
 }

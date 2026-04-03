@@ -34,3 +34,10 @@ export const updateUserFailedAction = createAction(
   '[user] update failed',
   props<{ error: string }>(),
 );
+
+export const updateCreditAmt = createAction('[user] update credit amt');
+
+export const updateCreditAmtSuccessAction = createAction(
+  '[user] update credit success',
+  props<{ auth: AuthResponse }>(),
+);

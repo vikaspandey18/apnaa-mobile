@@ -7,6 +7,8 @@ import {
   loginStartAction,
   loginSuccessAction,
   logoutAction,
+  updateCreditAmt,
+  updateCreditAmtSuccessAction,
   updateUserFailedAction,
   updateUserStartAction,
   updateUserSuccessAction,
@@ -122,4 +124,27 @@ export class AuthEffect {
       ),
     { dispatch: false },
   );
+
+  updateCreditAmt$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updateCreditAmt),
+      switchMap((action) => {
+        return this.authService.getCreditAmt().pipe(
+          map((response) => {
+            this.authService.storeUserInLocalStorate(response.data);
+            return updateCreditAmtSuccessAction({
+              auth: response.data,
+            });
+          }),
+          catchError((error) => {
+            return of(
+              updateUserFailedAction({
+                error: error.error.message || error.message,
+              }),
+            );
+          }),
+        );
+      }),
+    );
+  });
 }
