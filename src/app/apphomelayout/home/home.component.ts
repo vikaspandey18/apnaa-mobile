@@ -54,6 +54,7 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(loadLatestBookings());
     this.store.dispatch(loadPromoterStartAction());
     this.store.dispatch(loadAllBookings());
+    this.store.dispatch(updateCreditAmt());
 
     this.auth$ = this.store.select(getAuthState);
 

@@ -83,6 +83,7 @@ import { SubpromotersComponent } from './apphomelayout/subpromoters/subpromoters
 import { AddpromoterComponent } from './apphomelayout/subpromoters/addpromoter/addpromoter.component';
 import { AllpromotersComponent } from './apphomelayout/subpromoters/allpromoters/allpromoters.component';
 import { ViewtransactionComponent } from './apphomelayout/alltransaction/viewtransaction/viewtransaction.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -155,7 +156,7 @@ FullCalendarModule.registerPlugins([
     SubpromotersComponent,
     AddpromoterComponent,
     AllpromotersComponent,
-    ViewtransactionComponent
+    ViewtransactionComponent,
   ],
   imports: [
     BrowserModule,
@@ -168,6 +169,7 @@ FullCalendarModule.registerPlugins([
     Daterangepicker,
     HttpClientModule,
     ReactiveFormsModule,
+    QRCodeModule,
     StoreModule.forRoot(AppReducer),
     EffectsModule.forRoot(AppEffect),
     StoreDevtoolsModule.instrument({
