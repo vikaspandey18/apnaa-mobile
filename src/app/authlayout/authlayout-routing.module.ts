@@ -10,11 +10,13 @@ import { VerifyComponent } from './verify/verify.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
 import { SplashComponent } from './splash/splash.component';
 import { Thankyou2Component } from './thankyou2/thankyou2.component';
+import { NoAuthGuardGuard } from './services/no-auth-guard.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AuthlayoutComponent,
+    canActivate: [NoAuthGuardGuard],
     children: [
       {
         path: '',

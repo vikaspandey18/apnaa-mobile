@@ -38,7 +38,7 @@
         {{ isError }}
     </div>
     <div class="col-12 mb-2" *ngFor="let history of walletHistory">
-        <div class="form-group form-floating is-valid">
+        <div class="form-group form-floating" [ngClass]="history?.type === 'credit' ? 'is-valid' : 'is-invalid'">
             <input type="text" class="form-control" placeholder="Coupon Code"
                 [value]="history?.amount | currency:'INR':'symbol':'1.2-2':'en-IN'" readonly>
             <label class="form-control-label" for="coupon">{{ history?.createDate | date:'medium' }}</label>

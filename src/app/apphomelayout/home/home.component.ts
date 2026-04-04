@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { getLoggedUser } from 'src/app/authlayout/state/auth.actions';
+import { getLoggedUser, updateCreditAmt } from 'src/app/authlayout/state/auth.actions';
 import {
   getAuthCreditAmt,
   getAuthMobileState,
@@ -17,13 +17,15 @@ import SwiperCore, {
   A11y,
 } from 'swiper/core';
 import {
+  selectAllBookings,
   selectErrorTransac,
   selectLatestBookings,
   selectLoadingTransac,
 } from '../alltransaction/state/transac.selectors';
-import { loadLatestBookings } from '../alltransaction/state/transac.actions';
+import { loadAllBookings, loadLatestBookings } from '../alltransaction/state/transac.actions';
 import { loadPromoterStartAction } from '../subpromoters/state/promoter.actions';
 import { AuthResponse } from 'src/app/models/auth-response';
+import { map } from 'rxjs/operators';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
@@ -39,15 +41,19 @@ export class HomeComponent implements OnInit {
   auth$!: Observable<AuthResponse | null>;
   username$!: Observable<string | null>;
   mobile$!: Observable<string | null>;
-  
+
   latestTransaction$!: Observable<TransacResponse[] | []>;
+  allTransaction$!: Observable<TransacResponse[] | []>;
   transacLoading$!: Observable<boolean>;
   transacError$!: Observable<string | null>;
   creditAmt$!: Observable<number>;
 
+  totalSales$!: Observable<number>;
+
   ngOnInit(): void {
     this.store.dispatch(loadLatestBookings());
     this.store.dispatch(loadPromoterStartAction());
+    this.store.dispatch(loadAllBookings());
 
     this.auth$ = this.store.select(getAuthState);
 
@@ -58,6 +64,16 @@ export class HomeComponent implements OnInit {
     this.latestTransaction$ = this.store.select(selectLatestBookings);
     this.transacLoading$ = this.store.select(selectLoadingTransac);
     this.transacError$ = this.store.select(selectErrorTransac);
+
+    this.allTransaction$ = this.store.select(selectAllBookings);
+
+    
+
+    this.totalSales$ = this.allTransaction$.pipe(
+      map((transaction:TransacResponse[]) => {
+        return transaction.reduce((sum,t) => sum + Number(t.rate || 0), 0);
+      })
+    )
   }
 
   doCheck() {

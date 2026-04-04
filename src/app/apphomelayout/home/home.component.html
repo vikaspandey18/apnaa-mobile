@@ -134,7 +134,7 @@
                         <div class="row mb-2">
                             <div class="col">
                                 <p class="small text-muted mb-0">Ticket Sold</p>
-                                <p>₹ 3510.00</p>
+                                <p>{{ (totalSales$ | async) | currency:"INR"}}</p>
                             </div>
                             <div class="col-auto text-end">
                                 <p class="small text-muted mb-0"></p>
