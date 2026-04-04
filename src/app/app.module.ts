@@ -82,6 +82,7 @@ import { SuccessComponent } from './apphomelayout/success/success.component';
 import { SubpromotersComponent } from './apphomelayout/subpromoters/subpromoters.component';
 import { AddpromoterComponent } from './apphomelayout/subpromoters/addpromoter/addpromoter.component';
 import { AllpromotersComponent } from './apphomelayout/subpromoters/allpromoters/allpromoters.component';
+import { ViewtransactionComponent } from './apphomelayout/alltransaction/viewtransaction/viewtransaction.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -153,7 +154,8 @@ FullCalendarModule.registerPlugins([
     SuccessComponent,
     SubpromotersComponent,
     AddpromoterComponent,
-    AllpromotersComponent
+    AllpromotersComponent,
+    ViewtransactionComponent
   ],
   imports: [
     BrowserModule,

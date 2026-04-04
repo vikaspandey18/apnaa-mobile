@@ -20,7 +20,9 @@
                         <p class="text-muted size-12">{{item.customerName}}</p>
                     </div>
                     <div class="col-auto align-self-center text-end">
-                        <p class="mb-0">{{item.rate}}</p>
+                        <p class="mb-0">{{item.rate}}
+                            <a [routerLink]="['/viewtransaction', item.id]"><i class="bi bi-eye text-danger"></i></a>
+                        </p>
                         <p class="text-muted size-12">{{item.createDate}}</p>
                         <!-- <button class="btn btn-44 btn-light text-danger shadow-sm">
                             <i class="bi bi-trash"></i>

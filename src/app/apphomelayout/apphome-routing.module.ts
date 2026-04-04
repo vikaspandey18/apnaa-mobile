@@ -19,6 +19,7 @@ import { AddticketComponent } from './addticket/addticket.component';
 import { SuccessComponent } from './success/success.component';
 import { SubpromotersComponent } from './subpromoters/subpromoters.component';
 import { AddpromoterComponent } from './subpromoters/addpromoter/addpromoter.component';
+import { ViewtransactionComponent } from './alltransaction/viewtransaction/viewtransaction.component';
 
 const routes: Routes = [
   {
@@ -93,6 +94,10 @@ const routes: Routes = [
       {
         path: 'addpromoter',
         component: AddpromoterComponent,
+      },
+      {
+        path: 'viewtransaction/:id',
+        component: ViewtransactionComponent,
       },
     ],
   },
