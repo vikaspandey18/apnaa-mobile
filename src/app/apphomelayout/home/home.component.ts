@@ -68,8 +68,6 @@ export class HomeComponent implements OnInit {
 
     this.allTransaction$ = this.store.select(selectAllBookings);
 
-    
-
     this.totalSales$ = this.allTransaction$.pipe(
       map((transaction:TransacResponse[]) => {
         return transaction.reduce((sum,t) => sum + Number(t.rate || 0), 0);

@@ -165,19 +165,23 @@
 </div>
 <div class="row mb-4">
     <div class="col-12 px-0">
-        <div class="d-flex gap-2 align-items-center" *ngIf="transacLoading$ | async">
-            <ngx-skeleton-loader appearance="circle" [theme]="{ width: '48px', height: '48px', margin: '0' }">
-            </ngx-skeleton-loader>
-            <div class="flex-grow-1">
-                <ngx-skeleton-loader [theme]="{ width: '50%', height: '14px', display: 'block' }"></ngx-skeleton-loader>
-                <ngx-skeleton-loader [theme]="{ width: '30%', height: '12px', display: 'block' }"></ngx-skeleton-loader>
-            </div>
-        </div>
+
         <div *ngIf="transacError$ | async as error">
             {{ error }}
         </div>
 
         <ul class="list-group list-group-flush bg-none">
+
+            <li class="list-group-item" *ngIf="transacLoading$ | async">
+                <div class="flex-grow-1">
+                    <ngx-skeleton-loader appearance="circle" [theme]="{ width: '48px', height: '48px', margin: '0' }">
+                    </ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                        [theme]="{ width: '50%', height: '14px', display: 'block' }"></ngx-skeleton-loader>
+                    <ngx-skeleton-loader
+                        [theme]="{ width: '30%', height: '12px', display: 'block' }"></ngx-skeleton-loader>
+                </div>
+            </li>
 
             <li class="list-group-item" *ngFor="let item of (latestTransaction$ | async)">
                 <div class="row">
@@ -191,7 +195,8 @@
                         <p class="text-muted size-12">{{item.customerName}}</p>
                     </div>
                     <div class="col align-self-center text-end">
-                        <p class="mb-0">{{item.rate}}</p>
+                        <p class="mb-0">{{item.rate}} <a [routerLink]="['/viewtransaction', item.id]"><i
+                                    class="bi bi-eye text-danger"></i></a></p>
                         <p class="text-muted size-12">{{item.createDate}}</p>
                     </div>
                 </div>

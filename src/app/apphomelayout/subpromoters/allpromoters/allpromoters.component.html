@@ -10,20 +10,13 @@
 <div class="row mb-3">
     <div class="col-12 px-0">
 
-        <div class="d-flex gap-2 align-items-center" *ngIf="loading$ | async">
-            <ngx-skeleton-loader appearance="circle" [theme]="{ width: '48px', height: '48px', margin: '0' }">
-            </ngx-skeleton-loader>
-            <div class="flex-grow-1">
-                <ngx-skeleton-loader [theme]="{ width: '50%', height: '14px', display: 'block' }"></ngx-skeleton-loader>
-                <ngx-skeleton-loader [theme]="{ width: '30%', height: '12px', display: 'block' }"></ngx-skeleton-loader>
-            </div>
-        </div>
 
         <div *ngIf="error$ | async as error" class="text-danger">
             {{ error }}
         </div>
         <!-- swiper users connections -->
         <swiper class="connectionwiper" [slidesPerView]="'auto'" [spaceBetween]="0" [pagination]="false">
+
             <ng-template swiperSlide>
                 <a routerLink="/addpromoter" class="card text-center">
                     <div class="card-body">
@@ -33,6 +26,13 @@
                         <p class="text-color-theme size-12 small">Add</p>
                     </div>
                 </a>
+            </ng-template>
+
+            <ng-template swiperSlide *ngIf="loading$ | async">
+                <ngx-skeleton-loader appearance="circle" [theme]="{ height: '100px', width: '100px' }">
+                </ngx-skeleton-loader>
+                <ngx-skeleton-loader appearance="circle" [theme]="{ height: '100px', width: '100px' }">
+                </ngx-skeleton-loader>
             </ng-template>
 
 
