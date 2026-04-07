@@ -84,6 +84,8 @@ import { AddpromoterComponent } from './apphomelayout/subpromoters/addpromoter/a
 import { AllpromotersComponent } from './apphomelayout/subpromoters/allpromoters/allpromoters.component';
 import { ViewtransactionComponent } from './apphomelayout/alltransaction/viewtransaction/viewtransaction.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { CommonModule } from '@angular/common';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -159,6 +161,7 @@ FullCalendarModule.registerPlugins([
     ViewtransactionComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     SwiperModule,
@@ -176,6 +179,8 @@ FullCalendarModule.registerPlugins([
       maxAge: 25,
       logOnly: environment.production,
     }),
+    // NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
+    NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
   ],
   providers: [
     {

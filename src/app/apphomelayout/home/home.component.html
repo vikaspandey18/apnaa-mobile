@@ -165,8 +165,13 @@
 </div>
 <div class="row mb-4">
     <div class="col-12 px-0">
-        <div *ngIf="transacLoading$ | async">
-            Loading transactions...
+        <div class="d-flex gap-2 align-items-center" *ngIf="transacLoading$ | async">
+            <ngx-skeleton-loader appearance="circle" [theme]="{ width: '48px', height: '48px', margin: '0' }">
+            </ngx-skeleton-loader>
+            <div class="flex-grow-1">
+                <ngx-skeleton-loader [theme]="{ width: '50%', height: '14px', display: 'block' }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader [theme]="{ width: '30%', height: '12px', display: 'block' }"></ngx-skeleton-loader>
+            </div>
         </div>
         <div *ngIf="transacError$ | async as error">
             {{ error }}
@@ -268,4 +273,6 @@
             </div>
         </a>
     </div>
+
+
 </div>

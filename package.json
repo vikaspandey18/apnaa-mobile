@@ -32,6 +32,7 @@
     "ng2-charts": "^2.4.2",
     "ng2-daterangepicker": "^3.0.1",
     "ng2-nouislider": "^1.8.3",
+    "ngx-skeleton-loader": "^2.10.1",
     "nouislider": "^15.8.1",
     "rxjs": "~6.6.0",
     "swiper": "^6.7.1",
