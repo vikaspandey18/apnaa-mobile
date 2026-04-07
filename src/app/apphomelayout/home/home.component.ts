@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { getLoggedUser, updateCreditAmt } from 'src/app/authlayout/state/auth.actions';
+import {
+  getLoggedUser,
+  updateCreditAmt,
+} from 'src/app/authlayout/state/auth.actions';
 import {
   getAuthCreditAmt,
   getAuthMobileState,
@@ -22,7 +25,10 @@ import {
   selectLatestBookings,
   selectLoadingTransac,
 } from '../alltransaction/state/transac.selectors';
-import { loadAllBookings, loadLatestBookings } from '../alltransaction/state/transac.actions';
+import {
+  loadAllBookings,
+  loadLatestBookings,
+} from '../alltransaction/state/transac.actions';
 import { loadPromoterStartAction } from '../subpromoters/state/promoter.actions';
 import { AuthResponse } from 'src/app/models/auth-response';
 import { map } from 'rxjs/operators';
@@ -69,10 +75,10 @@ export class HomeComponent implements OnInit {
     this.allTransaction$ = this.store.select(selectAllBookings);
 
     this.totalSales$ = this.allTransaction$.pipe(
-      map((transaction:TransacResponse[]) => {
-        return transaction.reduce((sum,t) => sum + Number(t.rate || 0), 0);
-      })
-    )
+      map((transaction: TransacResponse[]) => {
+        return transaction.reduce((sum, t) => sum + Number(t.rate || 0), 0);
+      }),
+    );
   }
 
   doCheck() {
