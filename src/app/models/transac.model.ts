@@ -7,4 +7,5 @@ export interface TransacResponse {
   customerName?: string;
   rate?: string;
   createDate: string;
+  personName?: string;
 }
