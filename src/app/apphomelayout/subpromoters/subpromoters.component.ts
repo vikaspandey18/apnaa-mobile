@@ -11,6 +11,8 @@ import { loadPromoterStartAction } from './state/promoter.actions';
 import { map } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PromoterService } from './services/promoter.service';
+import { getAuthCreditAmt } from 'src/app/authlayout/state/auth.selectors';
+import { maxCreditValidator } from 'src/app/validators/max-credit';
 
 @Component({
   selector: 'app-subpromoters',
@@ -34,6 +36,9 @@ export class SubpromotersComponent implements OnInit {
   selectedPromoter: PromoterModel | null = null;
   balanceForm!: FormGroup;
 
+  creditAmt!: Observable<number>;
+  creditValue = 0;
+
   private modalInstance: any;
 
   modalLoading = false;
@@ -48,6 +53,15 @@ export class SubpromotersComponent implements OnInit {
     this.error$ = this.store.select(selectPromoterError);
 
     this.initForm();
+
+    this.creditAmt = this.store.select(getAuthCreditAmt);
+
+    this.creditAmt.subscribe((value) => {
+      this.creditValue = value;
+
+      // re-run validation when value updates
+      this.balanceForm?.get('amount')?.updateValueAndValidity();
+    });
 
     // combine search term with promoters list
     this.filteredPromoters$ = combineLatest([
@@ -68,7 +82,14 @@ export class SubpromotersComponent implements OnInit {
 
   initForm() {
     this.balanceForm = this.fb.group({
-      amount: ['', [Validators.required, Validators.min(1)]],
+      amount: [
+        '',
+        [
+          Validators.required,
+          Validators.min(1),
+          maxCreditValidator(() => this.creditValue),
+        ],
+      ],
     });
   }
 
@@ -118,4 +139,6 @@ export class SubpromotersComponent implements OnInit {
       // this.closeModal();
     }
   }
+
+  
 }

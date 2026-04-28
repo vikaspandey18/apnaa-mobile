@@ -1,0 +1,48 @@
+<!-- list data request money -->
+<h3 class="mb-3">Name: {{promoterName}}</h3>
+<div *ngIf="transacLoading$ | async">
+    Loading transactions...
+</div>
+<div *ngIf="transacError$ | async as error">
+    {{ error }}
+</div>
+<ng-container *ngIf="!(transacLoading$ | async)">
+    <ng-container *ngIf="(latestTransaction$ | async) as transactions">
+        <div *ngIf="transactions.length > 0; else noData">
+            <div class="row">
+                <div class="col">
+                    <div class="card mb-3" *ngFor="let item of (latestTransaction$ | async)">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <div class="avatar avatar-44 shadow-sm rounded-10">
+                                        <img [src]="item.eventImage ? item.imageUrl : 'assets/favicon.png' " alt="">
+                                    </div>
+                                </div>
+                                <div class="col align-self-center ps-0">
+                                    <p class="text-color-theme mb-0">{{ item.eventTitle }}</p>
+                                    <p class="text-muted size-12">{{item.customerName}}</p>
+                                </div>
+                                <div class="col-auto align-self-center text-end">
+                                    <p class="mb-0">{{item.rate}}
+                                        <!-- <a [routerLink]="['/viewtransaction', item.id]"><i
+                                                class="bi bi-eye text-danger"></i></a> -->
+                                    </p>
+                                    <p class="text-muted size-12">{{item.createDate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <ng-template #noData>
+            <div class="text-center mt-4 text-muted">
+                No records found
+            </div>
+        </ng-template>
+    </ng-container>
+</ng-container>

@@ -20,6 +20,7 @@ import { SuccessComponent } from './success/success.component';
 import { SubpromotersComponent } from './subpromoters/subpromoters.component';
 import { AddpromoterComponent } from './subpromoters/addpromoter/addpromoter.component';
 import { ViewtransactionComponent } from './alltransaction/viewtransaction/viewtransaction.component';
+import { SubPromoterProfileComponent } from './sub-promoter-profile/sub-promoter-profile.component';
 
 const routes: Routes = [
   {
@@ -98,6 +99,10 @@ const routes: Routes = [
       {
         path: 'viewtransaction/:id',
         component: ViewtransactionComponent,
+      },
+      {
+        path: 'sub-promoter-profile/:id/:name',
+        component: SubPromoterProfileComponent,
       },
     ],
   },

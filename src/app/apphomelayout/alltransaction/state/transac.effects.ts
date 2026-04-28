@@ -1,22 +1,33 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AlltransactionService } from '../service/alltransaction.service';
 import { Injectable } from '@angular/core';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import {
+  catchError,
+  concatMap,
+  map,
+  mergeMap,
+  switchMap,
+} from 'rxjs/operators';
+import {
+  getSubPromoterBooking,
+  getSubPromoterBookingFailure,
   loadAllBookings,
   loadAllBookingsFailure,
   loadAllBookingsSuccess,
   loadLatestBookings,
   loadLatestBookingsFailure,
   loadLatestBookingsSuccess,
+  loadSubPromoterBooking,
 } from './transac.actions';
 import { of } from 'rxjs';
+import { SubpromoterprofileService } from '../../sub-promoter-profile/service/subpromoterprofile.service';
 
 @Injectable()
 export class TransacEffects {
   constructor(
     private actions$: Actions,
     private transacService: AlltransactionService,
+    private subPromoterService: SubpromoterprofileService,
   ) {}
 
   loadLatest$ = createEffect(() =>
@@ -58,4 +69,28 @@ export class TransacEffects {
       }),
     ),
   );
+
+  allSubPromoterBooking$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadSubPromoterBooking),
+      concatMap((action) => {
+        return this.subPromoterService
+          .getSubPromoterDetails(action.promoterId)
+          .pipe(
+            map((response) => {
+              return getSubPromoterBooking({
+                subPromoterBookings: response.data,
+              });
+            }),
+            catchError((error) => {
+              return of(
+                getSubPromoterBookingFailure({
+                  error: error.error.message || error.message,
+                }),
+              );
+            }),
+          );
+      }),
+    );
+  });
 }

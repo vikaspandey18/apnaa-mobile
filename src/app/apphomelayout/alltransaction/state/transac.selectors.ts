@@ -23,3 +23,10 @@ export const selectErrorTransac = createSelector(
   selectTransacState,
   (state) => state.error,
 );
+
+export const selectSubPromoterBookings = createSelector(
+  selectTransacState,
+  (state) => {
+    return state.subPromoterBookings;
+  },
+);

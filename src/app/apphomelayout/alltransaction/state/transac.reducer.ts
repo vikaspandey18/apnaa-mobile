@@ -2,12 +2,15 @@ import { createReducer, on } from '@ngrx/store';
 
 import { initialState } from './transac.state';
 import {
+  getSubPromoterBooking,
+  getSubPromoterBookingFailure,
   loadAllBookings,
   loadAllBookingsFailure,
   loadAllBookingsSuccess,
   loadLatestBookings,
   loadLatestBookingsFailure,
   loadLatestBookingsSuccess,
+  loadSubPromoterBooking,
 } from './transac.actions';
 
 export const transacReducer = createReducer(
@@ -44,4 +47,27 @@ export const transacReducer = createReducer(
     loading: false,
     error,
   })),
+
+  //SubPromoter detail
+  on(loadSubPromoterBooking, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+    };
+  }),
+
+  on(getSubPromoterBooking, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      subPromoterBookings: action.subPromoterBookings,
+    };
+  }),
+  on(getSubPromoterBookingFailure, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      error: action.error,
+    };
+  }),
 );

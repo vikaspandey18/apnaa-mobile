@@ -38,14 +38,16 @@
 
                         <p class="small text-muted">
                             <i class="bi bi-check-all text-primary"></i>
-                            Sub Promoter
+                            Sub Promoter <a [routerLink]="['/sub-promoter-profile', promoter.id,promoter.name]"
+                                class=" text-primary">View</a>
                         </p>
                     </div>
                     <div class="col-auto align-self-center">
                         <button type="button" class="float-end small btn btn-danger text-light"
                             (click)="openModal(promoter)">
-                            Add
+                            +
                         </button>
+
                     </div>
 
                 </div>
@@ -75,9 +77,16 @@
                 <form [formGroup]="balanceForm">
                     <input type="number" class="form-control" placeholder="Enter amount" formControlName="amount" />
 
-                    <div *ngIf="balanceForm.get('amount')?.touched && balanceForm.get('amount')?.invalid"
-                        class="text-danger mt-1">
-                        Valid amount required
+                    <div *ngIf="balanceForm.get('amount') as amountCtrl">
+
+                        <div *ngIf="amountCtrl.touched && amountCtrl.invalid" class="text-danger mt-1">
+                            Valid amount required
+                        </div>
+
+                        <div *ngIf="amountCtrl.errors?.exceedsCredit" class="text-danger">
+                            Cannot enter more than {{ creditValue }}
+                        </div>
+
                     </div>
                 </form>
             </div>

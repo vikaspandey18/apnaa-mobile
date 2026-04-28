@@ -86,6 +86,7 @@ import { ViewtransactionComponent } from './apphomelayout/alltransaction/viewtra
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CommonModule } from '@angular/common';
+import { SubPromoterProfileComponent } from './apphomelayout/sub-promoter-profile/sub-promoter-profile.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -159,6 +160,7 @@ FullCalendarModule.registerPlugins([
     AddpromoterComponent,
     AllpromotersComponent,
     ViewtransactionComponent,
+    SubPromoterProfileComponent,
   ],
   imports: [
     CommonModule,

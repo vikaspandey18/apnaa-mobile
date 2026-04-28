@@ -37,7 +37,7 @@
 
 
             <ng-template swiperSlide *ngFor="let promoter of allPromoters$ | async">
-                <a [routerLink]="['/profile', promoter.id]" class="card text-center">
+                <a [routerLink]="['/sub-promoter-profile', promoter.id,promoter.name]" class="card text-center">
                     <div class="card-body">
                         <figure class="avatar avatar-50 shadow-sm mb-1 rounded-10">
                             <img [src]="promoter.image ? promoter.imageUrl : 'assets/img/user1.jpg'" alt="">

@@ -28,3 +28,20 @@ export const loadAllBookingsFailure = createAction(
   '[Transac] Load All Bookings Failure',
   props<{ error: string }>(),
 );
+
+// Sub promoter bookings
+
+export const loadSubPromoterBooking = createAction(
+  '[Transac] Load Sub Promoter Booking',
+  props<{ promoterId: string }>(),
+);
+
+export const getSubPromoterBooking = createAction(
+  '[Transac] Get Sub Promoter Booking',
+  props<{ subPromoterBookings: TransacResponse[] }>(),
+);
+
+export const getSubPromoterBookingFailure = createAction(
+  '[Transac] Get Sub Promoter Booking Failure',
+  props<{ error: string }>(),
+);
