@@ -1,5 +1,13 @@
-.logo-small img{
-    width: 50%;
+.logo-small img {
+  width: 50%;
+  box-shadow: none;
+  margin-right: 0;
+}
+
+@media screen and (min-width: 550px) {
+  .logo-small img {
+    width: 18%;
     box-shadow: none;
     margin-right: 0;
+  }
 }
