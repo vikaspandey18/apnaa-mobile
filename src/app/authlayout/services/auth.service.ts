@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResposne } from 'src/app/models/api-response.model';
 import { AuthResponse } from 'src/app/models/auth-response';
+import { OtpResponse } from 'src/app/models/otp-response.model';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
@@ -66,4 +67,8 @@ export class AuthService {
     return this.http.get<ApiResposne<AuthResponse>>(url);
   }
 
+  sendOtp(formData: FormData): Observable<ApiResposne<OtpResponse>> {
+    const url = `${this.baseUrl}/auth/changePassword.php`;
+    return this.http.post<ApiResposne<OtpResponse>>(url, formData);
+  }
 }

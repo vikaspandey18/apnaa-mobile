@@ -1,5 +1,59 @@
 <!-- list data request money -->
-<h3 class="mb-3">Name: {{promoterName}}</h3>
+<!-- <h3 class="mb-3">Name: {{promoterName}}</h3> -->
+
+<div class="card mb-3" *ngIf="promoter$ | async as promoter">
+    <div class="card-body position-relative">
+
+        <div class="form-check position-absolute end-0 top-0 m-2">
+            <input class="form-check-input rounded-circle" name="cardselect" type="radio" id="card1" />
+        </div>
+
+        <div class="row align-items-center">
+
+            <!-- Profile Image -->
+            
+
+            <!-- Promoter Details -->
+            <div class="col">
+
+                <h4 class="fw-semibold mb-1">
+
+                    {{ promoter.name?.toUpperCase() }}
+
+                </h4>
+
+                <p class="mb-1 text-muted">
+
+                    <i class="bi bi-telephone"></i>
+
+                    {{ promoter.mobile }}
+
+                </p>
+
+                <p class="mb-1 text-muted">
+
+                    <i class="bi bi-envelope"></i>
+
+                    {{ promoter.email || "-" }}
+
+                </p>
+
+                <p class="mb-0">
+
+                    <span class="fw-semibold">
+                        Credit:
+                    </span>
+
+                    ₹{{ promoter.credit_amt || 0 }}
+
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div *ngIf="transacLoading$ | async">
     Loading transactions...
 </div>

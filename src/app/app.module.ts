@@ -87,6 +87,9 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { CommonModule } from '@angular/common';
 import { SubPromoterProfileComponent } from './apphomelayout/sub-promoter-profile/sub-promoter-profile.component';
+import { ChangePasswordComponent } from './apphomelayout/change-password/change-password.component';
+import { ClientviewtransactionComponent } from './apphomelayout/alltransaction/clientviewtransaction/clientviewtransaction.component';
+import { HomeResetPasswordComponent } from './apphomelayout/home-reset-password/home-reset-password.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -161,6 +164,9 @@ FullCalendarModule.registerPlugins([
     AllpromotersComponent,
     ViewtransactionComponent,
     SubPromoterProfileComponent,
+    ChangePasswordComponent,
+    ClientviewtransactionComponent,
+    HomeResetPasswordComponent,
   ],
   imports: [
     CommonModule,

@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { PromoterModel } from 'src/app/models/promoter.model';
+
 import {
   selectAllPromoter,
   selectPromoterError,
   selectPromoterLoading,
 } from './state/promoter.selectors';
+
 import { loadPromoterStartAction } from './state/promoter.actions';
-import { map } from 'rxjs/operators';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { PromoterService } from './services/promoter.service';
+
 import { getAuthCreditAmt } from 'src/app/authlayout/state/auth.selectors';
+
 import { maxCreditValidator } from 'src/app/validators/max-credit';
 
 @Component({
@@ -26,30 +32,53 @@ export class SubpromotersComponent implements OnInit {
     private promoterService: PromoterService,
   ) {}
 
-  allPromoters$!: Observable<PromoterModel[] | []>;
-  loading$!: Observable<boolean>;
-  error$: Observable<string | null>;
+  /* SEARCH */
 
   private searchTerm$ = new BehaviorSubject<string>('');
+
+  /* OBSERVABLES */
+
+  allPromoters$!: Observable<PromoterModel[] | []>;
+  loading$!: Observable<boolean>;
+  error$!: Observable<string | null>;
   filteredPromoters$!: Observable<PromoterModel[] | []>;
 
+  /* SELECTED PROMOTER */
+
   selectedPromoter: PromoterModel | null = null;
-  balanceForm!: FormGroup;
+
+  /* CREDIT */
 
   creditAmt!: Observable<number>;
   creditValue = 0;
 
-  private modalInstance: any;
+  /* ADD BALANCE */
 
-  modalLoading = false;
-  modalError: string | null = null;
-  modalSuccess: string | null = null;
+  addBalanceForm!: FormGroup;
+
+  addLoading = false;
+  addError: string | null = null;
+  addSuccess: string | null = null;
+
+  private addModalInstance: any;
+
+  /* DEDUCT BALANCE */
+
+  deductBalanceForm!: FormGroup;
+
+  deductLoading = false;
+  deductError: string | null = null;
+  deductSuccess: string | null = null;
+
+  private deductModalInstance: any;
 
   ngOnInit(): void {
     this.store.dispatch(loadPromoterStartAction());
 
     this.allPromoters$ = this.store.select(selectAllPromoter);
+
     this.loading$ = this.store.select(selectPromoterLoading);
+
     this.error$ = this.store.select(selectPromoterError);
 
     this.initForm();
@@ -59,11 +88,12 @@ export class SubpromotersComponent implements OnInit {
     this.creditAmt.subscribe((value) => {
       this.creditValue = value;
 
-      // re-run validation when value updates
-      this.balanceForm?.get('amount')?.updateValueAndValidity();
+      // Re-run validator
+      this.addBalanceForm?.get('amount')?.updateValueAndValidity();
     });
 
-    // combine search term with promoters list
+    /* FILTER PROMOTERS */
+
     this.filteredPromoters$ = combineLatest([
       this.allPromoters$,
       this.searchTerm$,
@@ -72,6 +102,7 @@ export class SubpromotersComponent implements OnInit {
         promoters.filter((p) => {
           const name = p?.name?.toLowerCase() || '';
           const mobile = p?.mobile?.toLowerCase() || '';
+
           const search = term.toLowerCase();
 
           return name.includes(search) || mobile.includes(search);
@@ -80,8 +111,11 @@ export class SubpromotersComponent implements OnInit {
     );
   }
 
-  initForm() {
-    this.balanceForm = this.fb.group({
+  /* INIT FORMS */
+
+  initForm(): void {
+    // ADD BALANCE FORM
+    this.addBalanceForm = this.fb.group({
       amount: [
         '',
         [
@@ -91,54 +125,128 @@ export class SubpromotersComponent implements OnInit {
         ],
       ],
     });
+
+    // DEDUCT BALANCE FORM
+    this.deductBalanceForm = this.fb.group({
+      amount: ['', [Validators.required, Validators.min(1)]],
+    });
   }
+
+  /* SEARCH */
 
   onSearch(event: Event): void {
     const input = event.target as HTMLInputElement;
+
     this.searchTerm$.next(input.value);
   }
 
-  openModal(promoter: PromoterModel): void {
+  /* OPEN ADD MODAL */
+
+  openAddModal(promoter: PromoterModel): void {
     this.selectedPromoter = promoter;
-    this.balanceForm.reset();
+
+    this.addBalanceForm.reset();
+
+    this.addError = null;
+    this.addSuccess = null;
 
     const modalEl = document.getElementById('addBalanceModal');
-    this.modalInstance = new bootstrap.Modal(modalEl);
-    this.modalInstance.show();
 
-    this.modalError = null;
-    this.modalSuccess = null;
+    this.addModalInstance = new bootstrap.Modal(modalEl);
+
+    this.addModalInstance.show();
   }
 
-  closeModal() {
-    this.modalInstance?.hide();
+  /* OPEN DEDUCT MODAL */
+
+  openDeductModal(promoter: PromoterModel): void {
+    this.selectedPromoter = promoter;
+
+    this.deductBalanceForm.reset();
+
+    this.deductError = null;
+    this.deductSuccess = null;
+
+    const modalEl = document.getElementById('deductBalanceModal');
+
+    this.deductModalInstance = new bootstrap.Modal(modalEl);
+
+    this.deductModalInstance.show();
   }
 
-  submit(): void {
-    if (this.balanceForm.invalid || !this.selectedPromoter) return;
+  /* CLOSE MODALS */
 
-    this.modalLoading = true;
+  closeAddModal(): void {
+    this.addModalInstance?.hide();
+  }
 
-    const amount = this.balanceForm.value.amount;
+  closeDeductModal(): void {
+    this.deductModalInstance?.hide();
+  }
+
+  /* SUBMIT ADD BALANCE */
+
+  submitAddBalance(): void {
+    if (
+      this.addBalanceForm.invalid ||
+      !this.selectedPromoter ||
+      !this.selectedPromoter.id
+    ) {
+      return;
+    }
+
+    this.addLoading = true;
+
+    const amount = this.addBalanceForm.value.amount;
+
     const promoterId = this.selectedPromoter.id;
 
-    if (promoterId && amount) {
-      this.promoterService.addBalance(promoterId, amount).subscribe({
-        next: (response) => {
-          this.modalSuccess = response.message;
-        },
-        error: (err) => {
-          this.modalError =
-            err?.error?.message || 'An error occurred while adding balance.';
-        },
-        complete: () => {
-          this.modalLoading = false;
-        },
-      });
+    this.promoterService.addBalance(promoterId, amount).subscribe({
+      next: (response) => {
+        this.addSuccess = response.message;
+      },
 
-      // this.closeModal();
-    }
+      error: (err) => {
+        this.addError =
+          err?.error?.message || 'An error occurred while adding balance.';
+      },
+
+      complete: () => {
+        this.addLoading = false;
+      },
+    });
   }
 
-  
+  /* SUBMIT DEDUCT BALANCE */
+
+  submitDeductBalance(): void {
+    if (
+      this.deductBalanceForm.invalid ||
+      !this.selectedPromoter ||
+      !this.selectedPromoter.id
+    ) {
+      return;
+    }
+
+    this.deductLoading = true;
+
+    const amount = this.deductBalanceForm.value.amount;
+
+    const promoterId = this.selectedPromoter.id;
+
+    this.promoterService.deductBalance(promoterId, amount).subscribe({
+      next: (response) => {
+        this.deductSuccess = response.message;
+      },
+
+      error: (err) => {
+        this.deductError =
+          err?.error?.message || 'An error occurred while deducting balance.';
+      },
+
+      complete: () => {
+        this.deductLoading = false;
+      },
+    });
+  }
 }

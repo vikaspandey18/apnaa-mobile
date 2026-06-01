@@ -29,4 +29,13 @@ export class PromoterService {
     const body = { promoterId, amount };
     return this.http.post<ApiResposne<null>>(url, body);
   }
+
+  deductBalance(
+    promoterId: string,
+    amount: number,
+  ): Observable<ApiResposne<null>> {
+    const url = `${environment.apiUrl}/promoter/deductBalance.php`;
+    const body = { promoterId, amount };
+    return this.http.post<ApiResposne<null>>(url, body);
+  }
 }

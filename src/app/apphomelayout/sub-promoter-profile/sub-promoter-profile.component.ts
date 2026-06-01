@@ -13,6 +13,8 @@ import {
   selectLoadingTransac,
   selectSubPromoterBookings,
 } from '../alltransaction/state/transac.selectors';
+import { PromoterModel } from 'src/app/models/promoter.model';
+import { selectSinglePromoter } from '../subpromoters/state/promoter.selectors';
 
 @Component({
   selector: 'app-sub-promoter-profile',
@@ -31,6 +33,7 @@ export class SubPromoterProfileComponent implements OnInit {
   latestTransaction$!: Observable<TransacResponse[] | []>;
   transacLoading$!: Observable<boolean>;
   transacError$!: Observable<string | null>;
+  promoter$!: Observable<PromoterModel | null>;
 
   ngOnInit(): void {
     this.promoterId = this.route.snapshot.paramMap.get('id') || '';
@@ -39,6 +42,10 @@ export class SubPromoterProfileComponent implements OnInit {
     if (this.promoterId) {
       this.store.dispatch(
         loadSubPromoterBooking({ promoterId: this.promoterId }),
+      );
+
+       this.promoter$ = this.store.select(
+        selectSinglePromoter(this.promoterId),
       );
 
       this.latestTransaction$ = this.store.select(selectSubPromoterBookings);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
+  changePasswordStartAction,
   getLoggedUser,
   loginFailedAction,
   loginStartAction,
@@ -13,9 +14,17 @@ import {
   updateUserStartAction,
   updateUserSuccessAction,
 } from './auth.actions';
-import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
+import {
+  catchError,
+  concatMap,
+  exhaustMap,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { EMPTY, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { getAuthErrorState } from './auth.selectors';
 
 @Injectable()
 export class AuthEffect {
@@ -147,4 +156,6 @@ export class AuthEffect {
       }),
     );
   });
+
+  
 }

@@ -1,0 +1,80 @@
+<div class="voucher-wrapper" *ngIf="transaction$ | async as transaction; else loading">
+
+    <div class="ticket-container" #voucherElement>
+        <div class="ticket-box">
+            <!-- Top Section: Event Info -->
+            <div class="ticket-header">
+                <div class="event-image-wrapper" *ngIf="transaction.eventImage">
+                    <img [src]="transaction.eventImage ? transaction.imageUrl : 'assets/img/user1.jpg'" alt="Event"
+                        class="event-image" />
+                </div>
+                <div class="header-text">
+                    <h2 class="event-title">{{ transaction.eventTitle || 'Event Ticket' }}</h2>
+                    <span class="badge status">Verified</span>
+                </div>
+            </div>
+
+            <div class="ticket-divider">
+                <div class="notch left"></div>
+                <div class="notch right"></div>
+            </div>
+
+            <!-- Middle Section: Booking Details -->
+            <div class="ticket-body">
+                <div class="detail-row">
+                    <div class="detail-group">
+                        <span class="label">Customer Name</span>
+                        <span class="value">{{ transaction.customerName || 'N/A' }}</span>
+                    </div>
+                    <div class="detail-group text-end">
+                        <span class="label">Booking Date</span>
+                        <span class="value">{{ transaction.createDate | date:'mediumDate' }}</span>
+                    </div>
+                </div>
+
+                <div class="detail-row mt-2">
+                    <div class="detail-group">
+                        <span class="label">Paid Amount</span>
+                        <span class="value highlight-text">{{ transaction.rate || '0' | currency:'INR' }}</span>
+                    </div>
+                    <div class="detail-group text-end">
+                        <span class="label">Ticket ID</span>
+                        <span class="value">{{ transaction.id }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ticket-divider dotted"></div>
+
+            <!-- Bottom Section: QR Code -->
+            <div class="ticket-footer text-center">
+                <span class="qr-label">Scan at Entry</span>
+                <div class="qr-wrapper">
+                    <qrcode
+                        [qrdata]="'https://apnaaentry.vizitlog.com/scan?code=' + (transaction.bookingCode || transaction.id || 'NO-REF') + '&promoterId=' + promoterId"
+                        [width]="250" [errorCorrectionLevel]="'M'" colorDark="#1a1a1a" colorLight="#ffffff">
+                    </qrcode>
+                </div>
+                <span class="booking-code">Code: <strong>{{ transaction.bookingCode || 'N/A' }}</strong></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="download-actions">
+        <button class="btn-download primary" (click)="downloadImage()">
+            Download as Image
+        </button>
+        <button class="btn-download secondary" (click)="downloadPDF()">
+            Download as PDF
+        </button>
+    </div>
+
+</div>
+
+<ng-template #loading>
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Retrieving your ticket...</p>
+    </div>
+</ng-template>

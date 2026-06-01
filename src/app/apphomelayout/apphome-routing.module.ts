@@ -21,6 +21,9 @@ import { SubpromotersComponent } from './subpromoters/subpromoters.component';
 import { AddpromoterComponent } from './subpromoters/addpromoter/addpromoter.component';
 import { ViewtransactionComponent } from './alltransaction/viewtransaction/viewtransaction.component';
 import { SubPromoterProfileComponent } from './sub-promoter-profile/sub-promoter-profile.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ClientviewtransactionComponent } from './alltransaction/clientviewtransaction/clientviewtransaction.component';
+import { HomeResetPasswordComponent } from './home-reset-password/home-reset-password.component';
 
 const routes: Routes = [
   {
@@ -101,8 +104,20 @@ const routes: Routes = [
         component: ViewtransactionComponent,
       },
       {
+        path: 'clientviewtransaction/:id',
+        component: ClientviewtransactionComponent,
+      },
+      {
         path: 'sub-promoter-profile/:id/:name',
         component: SubPromoterProfileComponent,
+      },
+      {
+        path: 'change-password',
+        component: ChangePasswordComponent,
+      },
+      {
+        path: 'homeresetpassword',
+        component: HomeResetPasswordComponent,
       },
     ],
   },

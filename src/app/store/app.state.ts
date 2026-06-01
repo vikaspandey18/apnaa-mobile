@@ -1,6 +1,9 @@
 import { TransacEffects } from '../apphomelayout/alltransaction/state/transac.effects';
 import { transacReducer } from '../apphomelayout/alltransaction/state/transac.reducer';
 import { TransacState } from '../apphomelayout/alltransaction/state/transac.state';
+import { OtpEffect } from '../apphomelayout/change-password/state/otp.effects';
+import { otpReducer } from '../apphomelayout/change-password/state/otp.reducer';
+import { OtpState } from '../apphomelayout/change-password/state/otp.state';
 import { PromoterEffect } from '../apphomelayout/subpromoters/state/promoter.effects';
 import { promoterReducer } from '../apphomelayout/subpromoters/state/promoter.reducer';
 import { PromoterState } from '../apphomelayout/subpromoters/state/promoter.state';
@@ -19,7 +22,8 @@ export interface AppState {
   event: EventState;
   ticket: TicketState;
   alltransaction: TransacState;
-  promoters:PromoterState
+  promoters: PromoterState;
+  otp: OtpState;
 }
 
 export const AppReducer = {
@@ -27,7 +31,8 @@ export const AppReducer = {
   events: eventReducer,
   tickets: ticketReducer,
   transac: transacReducer,
-  promoter:promoterReducer
+  promoter: promoterReducer,
+  otp: otpReducer,
 };
 
 export const AppEffect = [
@@ -35,5 +40,6 @@ export const AppEffect = [
   EventEffect,
   TicketEffect,
   TransacEffects,
-  PromoterEffect
+  PromoterEffect,
+  OtpEffect,
 ];

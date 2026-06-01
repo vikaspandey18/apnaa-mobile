@@ -41,3 +41,14 @@ export const updateCreditAmtSuccessAction = createAction(
   '[user] update credit success',
   props<{ auth: AuthResponse }>(),
 );
+
+// change the password
+
+export const changePasswordStartAction = createAction(
+  '[user] change password start',
+  props<{ formData: FormData }>(),
+);
+
+export const changePasswordSuccessAction = createAction(
+  "[user] change password success",
+)

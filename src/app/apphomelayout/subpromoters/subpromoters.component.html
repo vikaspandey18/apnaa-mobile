@@ -42,12 +42,15 @@
                                 class=" text-primary">View</a>
                         </p>
                     </div>
-                    <div class="col-auto align-self-center">
-                        <button type="button" class="float-end small btn btn-danger text-light"
-                            (click)="openModal(promoter)">
+                    <div class="col-auto align-self-center d-flex gap-2">
+                        <button type="button" class="float-end small btn btn-success text-light"
+                            (click)="openAddModal(promoter)">
                             +
                         </button>
-
+                        <button type="button" class="float-end small btn btn-danger text-light"
+                            (click)="openDeductModal(promoter)">
+                            -
+                        </button>
                     </div>
 
                 </div>
@@ -59,25 +62,26 @@
     </div>
 </div>
 
+<!-- ADD BALANCE MODAL -->
 <div class="modal fade" id="addBalanceModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
 
-            <!-- Header -->
             <div class="modal-header">
                 <h5 class="modal-title">Add Balance</h5>
-                <button type="button" class="btn-close" (click)="closeModal()"></button>
+                <button type="button" class="btn-close" (click)="closeAddModal()"></button>
             </div>
 
-            <!-- Body -->
             <div class="modal-body" *ngIf="selectedPromoter">
+
                 <p><strong>Name:</strong> {{ selectedPromoter.name }}</p>
                 <p><strong>Mobile:</strong> {{ selectedPromoter.mobile }}</p>
 
-                <form [formGroup]="balanceForm">
+                <form [formGroup]="addBalanceForm">
+
                     <input type="number" class="form-control" placeholder="Enter amount" formControlName="amount" />
 
-                    <div *ngIf="balanceForm.get('amount') as amountCtrl">
+                    <div *ngIf="addBalanceForm.get('amount') as amountCtrl">
 
                         <div *ngIf="amountCtrl.touched && amountCtrl.invalid" class="text-danger mt-1">
                             Valid amount required
@@ -88,23 +92,86 @@
                         </div>
 
                     </div>
+
                 </form>
+
             </div>
 
-            <div *ngIf="modalSuccess" class="alert alert-success m-3">
-                {{ modalSuccess }}
+            <div *ngIf="addSuccess" class="alert alert-success m-3">
+                {{ addSuccess }}
             </div>
 
-            <div *ngIf="modalError" class="alert alert-danger m-3">
-                {{ modalError }}
+            <div *ngIf="addError" class="alert alert-danger m-3">
+                {{ addError }}
             </div>
 
-            <!-- Footer -->
             <div class="modal-footer">
-                <button class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-                <button class="btn btn-primary" [disabled]="balanceForm.invalid || modalLoading" (click)="submit()">
-                    {{ modalLoading ? 'Submitting...' : 'Submit' }}
+                <button class="btn btn-secondary" (click)="closeAddModal()">
+                    Cancel
                 </button>
+
+                <button class="btn btn-primary" [disabled]="addBalanceForm.invalid || addLoading"
+                    (click)="submitAddBalance()">
+                    {{ addLoading ? 'Submitting...' : 'Submit' }}
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- DEDUCT BALANCE MODAL -->
+<div class="modal fade" id="deductBalanceModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Deduct Balance</h5>
+                <button type="button" class="btn-close" (click)="closeDeductModal()"></button>
+            </div>
+
+            <div class="modal-body" *ngIf="selectedPromoter">
+
+                <p><strong>Name:</strong> {{ selectedPromoter.name }}</p>
+                <p><strong>Mobile:</strong> {{ selectedPromoter.mobile }}</p>
+
+                <form [formGroup]="deductBalanceForm">
+
+                    <input type="number" class="form-control" placeholder="Enter amount" formControlName="amount" />
+
+                    <div *ngIf="deductBalanceForm.get('amount') as amountCtrl">
+
+                        <div *ngIf="amountCtrl.touched && amountCtrl.invalid" class="text-danger mt-1">
+                            Valid amount required
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div *ngIf="deductSuccess" class="alert alert-success m-3">
+                {{ deductSuccess }}
+            </div>
+
+            <div *ngIf="deductError" class="alert alert-danger m-3">
+                {{ deductError }}
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary" (click)="closeDeductModal()">
+                    Cancel
+                </button>
+
+                <button class="btn btn-danger" [disabled]="deductBalanceForm.invalid || deductLoading"
+                    (click)="submitDeductBalance()">
+                    {{ deductLoading ? 'Submitting...' : 'Submit' }}
+                </button>
+
             </div>
 
         </div>

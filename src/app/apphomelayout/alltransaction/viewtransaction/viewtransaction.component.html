@@ -47,7 +47,7 @@
       <div class="ticket-divider dotted"></div>
 
       <!-- Bottom Section: QR Code -->
-      <div class="ticket-footer text-center">
+      <!-- <div class="ticket-footer text-center">
         <span class="qr-label">Scan at Entry</span>
         <div class="qr-wrapper">
           <qrcode [qrdata]="'https://apnaaentry.vizitlog.com/scan?code=' + (transaction.bookingCode || transaction.id || 'NO-REF') + '&promoterId=' + promoterId" [width]="250"
@@ -55,19 +55,19 @@
           </qrcode>
         </div>
         <span class="booking-code">Code: <strong>{{ transaction.bookingCode || 'N/A' }}</strong></span>
-      </div>
+      </div> -->
 
     </div>
   </div>
 
-  <div class="download-actions">
+  <!-- <div class="download-actions">
     <button class="btn-download primary" (click)="downloadImage()">
       Download as Image
     </button>
     <button class="btn-download secondary" (click)="downloadPDF()">
       Download as PDF
     </button>
-  </div>
+  </div> -->
 
 </div>
 

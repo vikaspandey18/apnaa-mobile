@@ -14,3 +14,9 @@ export const selectPromoterLoading = createSelector(selectPromoter, (state) => {
 export const selectPromoterError = createSelector(selectPromoter, (state) => {
   return state.error;
 });
+
+export const selectSinglePromoter = (id: string) =>
+  createSelector(
+    selectAllPromoter,
+    (promoters) => promoters.find((promoter) => promoter.id === id) || null,
+  );
