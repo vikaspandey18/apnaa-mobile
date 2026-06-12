@@ -47,6 +47,7 @@ export class AddticketComponent implements OnInit {
       customerEmail: [''],
       paymentStatus: ['Pending', Validators.required],
       notes: [''],
+      amt_note: [''],
     });
 
     const ticketId = this.route.snapshot.paramMap.get('ticket');

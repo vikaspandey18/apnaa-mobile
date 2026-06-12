@@ -6,13 +6,10 @@ import { EventResponse } from 'src/app/models/event.model';
 import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventsService {
-
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   private baseUrl = environment.apiUrl;
 
