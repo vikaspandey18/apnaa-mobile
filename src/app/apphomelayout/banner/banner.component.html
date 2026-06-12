@@ -1,1 +1,31 @@
-<p>banner works!</p>
+<div class="row mb-3">
+  <div class="col-12">
+    <swiper
+      class="bannerswiper"
+      [slidesPerView]="1"
+      [spaceBetween]="10"
+      [pagination]="true"
+
+    >
+      <ng-container *ngIf="loading$ | async">
+        <ng-template swiperSlide>
+          <ngx-skeleton-loader
+            appearance="line"
+            [theme]="{ height: '130px', width: '100px' }"
+          >
+          </ngx-skeleton-loader>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngIf="!(loading$ | async)">
+        <ng-template swiperSlide *ngFor="let banner of allBanners$ | async">
+          <img
+            [src]="banner.bannerImage"
+            [alt]="banner.image"
+            class="img-fluid"
+          />
+        </ng-template>
+      </ng-container>
+    </swiper>
+  </div>
+</div>

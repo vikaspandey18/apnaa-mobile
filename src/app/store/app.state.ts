@@ -1,6 +1,9 @@
 import { TransacEffects } from '../apphomelayout/alltransaction/state/transac.effects';
 import { transacReducer } from '../apphomelayout/alltransaction/state/transac.reducer';
 import { TransacState } from '../apphomelayout/alltransaction/state/transac.state';
+import { BannerEffect } from '../apphomelayout/banner/state/banner.effects';
+import { bannerReducer } from '../apphomelayout/banner/state/banner.reducer';
+import { BannerState } from '../apphomelayout/banner/state/banner.state';
 import { OtpEffect } from '../apphomelayout/change-password/state/otp.effects';
 import { otpReducer } from '../apphomelayout/change-password/state/otp.reducer';
 import { OtpState } from '../apphomelayout/change-password/state/otp.state';
@@ -24,6 +27,7 @@ export interface AppState {
   alltransaction: TransacState;
   promoters: PromoterState;
   otp: OtpState;
+  banner: BannerState;
 }
 
 export const AppReducer = {
@@ -33,6 +37,7 @@ export const AppReducer = {
   transac: transacReducer,
   promoter: promoterReducer,
   otp: otpReducer,
+  banners: bannerReducer,
 };
 
 export const AppEffect = [
@@ -42,4 +47,5 @@ export const AppEffect = [
   TransacEffects,
   PromoterEffect,
   OtpEffect,
+  BannerEffect,
 ];
