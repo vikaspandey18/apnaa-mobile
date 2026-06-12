@@ -5,6 +5,9 @@ import {
   getEventFailedAction,
   getEventStartAction,
   getEventSuccessAction,
+  loadCategoryFailed,
+  loadCategoryStart,
+  loadCategorySuccess,
 } from './event.actions';
 
 export const eventReducer = createReducer(
@@ -25,6 +28,30 @@ export const eventReducer = createReducer(
     };
   }),
   on(getEventFailedAction, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      error: action.error,
+    };
+  }),
+
+  // Category
+  on(loadCategoryStart, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+      error: null,
+    };
+  }),
+  on(loadCategorySuccess, (state, action) => {
+    return {
+      ...state,
+      category: action.category,
+      loading: false,
+      error: null,
+    };
+  }),
+  on(loadCategoryFailed, (state, action) => {
     return {
       ...state,
       loading: false,

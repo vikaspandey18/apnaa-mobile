@@ -23,3 +23,10 @@ export const eventErrorSelector = createSelector(
     return state.error;
   },
 );
+
+export const selectCategory = createSelector(
+  getEventFeatureSelector,
+  (state) => {
+    return state.category;
+  },
+);

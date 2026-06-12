@@ -13,6 +13,6 @@ export interface EventResponse {
   image?: string;
   eventImg?: string;
   category?: string;
-  organizerImg?:string;
-  organizer_logo?:string;
+  organizerImg?: string;
+  organizer_logo?: string;
 }
