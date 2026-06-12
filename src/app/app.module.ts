@@ -90,6 +90,7 @@ import { SubPromoterProfileComponent } from './apphomelayout/sub-promoter-profil
 import { ChangePasswordComponent } from './apphomelayout/change-password/change-password.component';
 import { ClientviewtransactionComponent } from './apphomelayout/alltransaction/clientviewtransaction/clientviewtransaction.component';
 import { HomeResetPasswordComponent } from './apphomelayout/home-reset-password/home-reset-password.component';
+import { BannerComponent } from './apphomelayout/banner/banner.component';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -167,6 +168,7 @@ FullCalendarModule.registerPlugins([
     ChangePasswordComponent,
     ClientviewtransactionComponent,
     HomeResetPasswordComponent,
+    BannerComponent,
   ],
   imports: [
     CommonModule,
