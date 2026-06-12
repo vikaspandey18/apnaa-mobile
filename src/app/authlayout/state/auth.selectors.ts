@@ -44,3 +44,10 @@ export const getAuthErrorState = createSelector(
     return state.error;
   },
 );
+
+export const selectPromoterType = createSelector(
+  getAuthFeatureSelector,
+  (state) => {
+    return state.auth?.promoter_type || 0;
+  },
+);

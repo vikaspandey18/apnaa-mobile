@@ -6,4 +6,5 @@ export interface AuthResponse {
   image?: string;
   email?: string;
   photoUrl?: string;
+  promoter_type?: string;
 }

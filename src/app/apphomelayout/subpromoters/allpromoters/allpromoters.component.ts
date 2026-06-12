@@ -13,6 +13,7 @@ import {
   selectPromoterError,
   selectPromoterLoading,
 } from '../state/promoter.selectors';
+import { selectPromoterType } from 'src/app/authlayout/state/auth.selectors';
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
 @Component({
@@ -26,10 +27,13 @@ export class AllpromotersComponent implements OnInit {
   allPromoters$!: Observable<PromoterModel[] | []>;
   loading$!: Observable<boolean>;
   error$!: Observable<string | null>;
+  promoterType$!: Observable<string | 0>;
 
   ngOnInit(): void {
     this.allPromoters$ = this.store.select(selectAllPromoter);
     this.loading$ = this.store.select(selectPromoterLoading);
     this.error$ = this.store.select(selectPromoterError);
+
+    this.promoterType$ = this.store.select(selectPromoterType);
   }
 }
