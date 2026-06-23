@@ -43,8 +43,11 @@ export class AddticketComponent implements OnInit {
     this.form = this.fb.group({
       noOfTicket: [1, [Validators.required, Validators.min(1)]],
       customerName: ['', Validators.required],
-      customerMobileNo: ['', Validators.required],
-      customerEmail: [''],
+      customerMobileNo: [
+        '',
+        [Validators.required, Validators.pattern(/^[0-9]{10}$/)],
+      ],
+      customerEmail: ['', [Validators.email]],
       paymentStatus: ['Pending', Validators.required],
       notes: [''],
       amt_note: [''],

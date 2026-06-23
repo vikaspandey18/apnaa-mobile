@@ -20,9 +20,28 @@
                 <label>Customer Mobile No *</label>
             </div>
 
+            <div class="text-danger mt-1" *ngIf="form.get('customerMobileNo')?.invalid && form.get('customerMobileNo')?.touched">
+                <small *ngIf="form.get('customerMobileNo')?.errors?.required">
+                    Mobile number is required.
+                </small>
+
+                <small *ngIf="form.get('customerMobileNo')?.errors?.pattern">
+                    Mobile number must be exactly 10 digits.
+                </small>
+            </div>
+
             <div class="form-floating mb-3">
                 <input type="email" class="form-control" placeholder="" formControlName="customerEmail">
                 <label>Customer Email</label>
+            </div>
+            <div class="text-danger mt-1" *ngIf="form.get('customerEmail')?.invalid && form.get('customerEmail')?.touched">
+                <small *ngIf="form.get('customerEmail')?.errors?.required">
+                    Email is required.
+                </small>
+
+                <small *ngIf="form.get('customerEmail')?.errors?.email">
+                    Not a valid email
+                </small>
             </div>
             <div class="form-floating mb-3">
                 <select class="form-control" id="payment" formControlName="paymentStatus" required>
