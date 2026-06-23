@@ -1,19 +1,29 @@
 <div class="row">
-    <div class="col-auto">
-        <a href="javascript:void(0)" target="_self" class="btn btn-light btn-44 menu-btn" (click)="menuopen()">
-            <i class="bi bi-list"></i>
-        </a>
+  <div class="col-auto">
+    <a
+      href="javascript:void(0)"
+      target="_self"
+      class="btn btn-light btn-44 menu-btn"
+      (click)="menuopen()"
+    >
+      <i class="bi bi-list"></i>
+    </a>
+  </div>
+  <div class="col align-self-center text-center">
+    <div class="logo-small">
+      <img src="assets/apnaentrylogobg.png" alt="Apna Logo" />
+      <!-- <h5>Apnaa Entry</h5> -->
     </div>
-    <div class="col align-self-center text-center">
-        <div class="logo-small">
-            <img src="assets/favicon.png" alt="">
-            <!-- <h5>Apnaa Entry</h5> -->
-        </div>
-    </div>
-    <div class="col-auto">
-        <a routerLink="/notifications" routerLinkActive="active" target="_self" class="btn btn-light btn-44">
-            <i class="bi bi-bell"></i>
-            <span class="count-indicator"></span>
-        </a>
-    </div>
+  </div>
+  <div class="col-auto">
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      target="_self"
+      class="btn btn-light btn-44"
+    >
+      <i class="bi bi-bell"></i>
+      <span class="count-indicator"></span>
+    </a>
+  </div>
 </div>
