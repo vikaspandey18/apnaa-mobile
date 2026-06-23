@@ -5,6 +5,7 @@ export interface TicketRespone {
   mrp?: string;
   rate?: string;
   sold_tickets?: number;
+  description?: string;
 }
 
 export interface MrpTicket {
