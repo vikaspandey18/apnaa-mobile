@@ -9,4 +9,8 @@ export interface TransacResponse {
   createDate: string;
   personName?: string;
   notes?: string;
+  amt_note?: string;
+  venue?: string;
+  personMobile?: string;
+  noOfTicket?: string;
 }

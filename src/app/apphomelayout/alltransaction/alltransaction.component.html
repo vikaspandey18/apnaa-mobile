@@ -32,7 +32,7 @@
                 <div class="row">
                     <div clas="col-xs-12">
                         <small>Promoter: {{item.personName}}</small>
-                        <p><small>Pay Amount: {{ item.notes }}</small></p>
+                        <p *ngIf="item.amt_note"><small>Pay Amount: {{ item.amt_note }}</small></p>
                     </div>
                 </div>
             </div>

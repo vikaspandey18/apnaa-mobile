@@ -240,8 +240,8 @@
           <div clas="col-xs-12">
             <small>Promoter: {{ item.personName }}</small>
           </div>
-           <div clas="col-xs-12">
-            <small>Pay Amount: {{ item.notes }}</small>
+          <div clas="col-xs-12" *ngIf="item.amt_note">
+            <small>Pay Amount: {{ item.amt_note }}</small>
           </div>
         </div>
       </li>
