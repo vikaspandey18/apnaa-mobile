@@ -8,4 +8,5 @@ export interface TransacResponse {
   rate?: string;
   createDate: string;
   personName?: string;
+  notes?: string;
 }
