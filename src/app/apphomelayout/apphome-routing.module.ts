@@ -24,6 +24,7 @@ import { SubPromoterProfileComponent } from './sub-promoter-profile/sub-promoter
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ClientviewtransactionComponent } from './alltransaction/clientviewtransaction/clientviewtransaction.component';
 import { HomeResetPasswordComponent } from './home-reset-password/home-reset-password.component';
+import { ReportComponent } from './report/report.component';
 
 const routes: Routes = [
   {
@@ -118,6 +119,10 @@ const routes: Routes = [
       {
         path: 'homeresetpassword',
         component: HomeResetPasswordComponent,
+      },
+      {
+        path: 'report',
+        component: ReportComponent,
       },
     ],
   },
