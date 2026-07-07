@@ -1,8 +1,74 @@
-<iframe
-  [src]="reportUrl"
-  width="100%"
-  height="1000"
-  frameborder="0"
-  sandbox="allow-scripts allow-same-origin allow-forms"
->
-</iframe>
+<div class="row">
+  <div class="col-12 col-md-12">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header border-0 bg-transparent">
+        <div class="row align-items-center">
+          <div class="col">
+            <h5 class="mb-0 text-color-theme">Activity Report</h5>
+          </div>
+          <div class="col-auto">
+            <button
+              *ngIf="!(loading$ | async)"
+              (click)="retry()"
+              class="btn btn-light btn-sm text-color-theme"
+            >
+              <i class="bi bi-arrow-clockwise"></i> Refresh
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <!-- Loading State -->
+        <div *ngIf="loading$ | async" class="text-center py-4">
+          <div class="spinner-border text-primary mb-3" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="text-muted mb-0">Fetching latest report data...</p>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="!(loading$ | async) && (error$ | async) as error" class="alert alert-danger shadow-sm text-center py-4 my-2">
+          <i class="bi bi-exclamation-triangle-fill text-danger display-4 mb-2 d-block"></i>
+          <h6 class="alert-heading text-danger">Failed to Load Report</h6>
+          <p class="mb-3">{{ error }}</p>
+          <button (click)="retry()" class="btn btn-danger btn-sm px-4">
+            <i class="bi bi-arrow-clockwise me-1"></i> Retry
+          </button>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="!(loading$ | async) && !(error$ | async) && !(report$ | async)" class="text-center py-4">
+          <i class="bi bi-file-earmark-bar-graph text-muted display-4 mb-2 d-block"></i>
+          <p class="text-muted mb-0">No report data is available.</p>
+        </div>
+
+        <!-- Report Table -->
+        <div *ngIf="!(loading$ | async) && !(error$ | async) && (report$ | async) as report" class="table-responsive">
+          <table class="table table-striped table-hover align-middle mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th *ngFor="let header of report.headers" scope="col">{{ header }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="report.rows.length === 0">
+                <td [attr.colspan]="report.headers.length" class="text-center py-3 text-muted">
+                  No records found
+                </td>
+              </tr>
+              <tr *ngFor="let row of report.rows">
+                <td *ngFor="let cell of row">{{ cell }}</td>
+              </tr>
+            </tbody>
+            <tfoot *ngIf="report.footers && report.footers.length > 0" class="table-light fw-bold">
+              <tr>
+                <td *ngFor="let footer of report.footers">{{ footer }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

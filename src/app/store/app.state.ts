@@ -19,6 +19,9 @@ import { TicketState } from '../appinnerlayout/blogdetails/state/ticket.state';
 import { AuthEffect } from '../authlayout/state/auth.effects';
 import { authReducer } from '../authlayout/state/auth.reducer';
 import { AuthState } from '../authlayout/state/auth.state';
+import { ReportEffects } from '../apphomelayout/report/state/report.effects';
+import { reportReducer } from '../apphomelayout/report/state/report.reducer';
+import { ReportState } from '../apphomelayout/report/state/report.state';
 
 export interface AppState {
   auth: AuthState;
@@ -28,6 +31,7 @@ export interface AppState {
   promoters: PromoterState;
   otp: OtpState;
   banner: BannerState;
+  report: ReportState;
 }
 
 export const AppReducer = {
@@ -38,6 +42,7 @@ export const AppReducer = {
   promoter: promoterReducer,
   otp: otpReducer,
   banners: bannerReducer,
+  report: reportReducer,
 };
 
 export const AppEffect = [
@@ -48,4 +53,6 @@ export const AppEffect = [
   PromoterEffect,
   OtpEffect,
   BannerEffect,
+  ReportEffects,
 ];
+
