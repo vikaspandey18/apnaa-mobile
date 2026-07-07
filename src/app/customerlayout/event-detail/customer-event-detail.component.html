@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-12 px-0 mb-4" *ngIf="event">
+    <div class="position-relative" style="height: 220px;">
+      <img
+        [src]="event.eventImg || event.image || 'assets/img/news1.jpg'"
+        alt="Event Image"
+        class="img-fluid"
+        style="width: 100%; height: 100%; object-fit: cover;"
+      />
+      <div class="position-absolute bottom-0 start-0 w-100 p-3 bg-gradient-dark text-white">
+        <h3 class="font-weight-bold mb-1">{{ event.title }}</h3>
+        <p class="small mb-0 opacity-75"><i class="bi bi-geo-alt"></i> {{ event.address }}, {{ event.city }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-8 mx-auto">
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <p class="text-muted mt-2">Loading event info...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger text-center my-3">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="event && !loading">
+      
+      <!-- Event description -->
+      <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="text-color-theme font-weight-bold mb-2">About Event</h5>
+          <p class="text-muted text-color-theme">{{ event.description }}</p>
+          <div class="row mt-3 border-top pt-3">
+            <div class="col-6">
+              <span class="small text-muted d-block text-uppercase">Contact Info</span>
+              <span class="font-weight-bold text-color-theme">{{ event.contact_details || '-' }}</span>
+            </div>
+            <div class="col-6">
+              <span class="small text-muted d-block text-uppercase">City / State</span>
+              <span class="font-weight-bold text-color-theme">{{ event.city }}, {{ event.state }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tickets selection -->
+      <h5 class="text-color-theme font-weight-bold mb-3">Select Tickets</h5>
+      <div *ngIf="tickets.length === 0" class="alert alert-warning text-center">
+        No tickets are currently available for this event.
+      </div>
+
+      <div class="col-12 px-0" *ngFor="let t of tickets">
+        <div class="card mb-3 border border-default clickable-card"
+             [class.border-primary]="selectedTicketId === t.id"
+             (click)="selectTicket(t.id)"
+             style="cursor: pointer;">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <div class="avatar avatar-44 rounded-10 bg-opac text-color-theme d-flex align-items-center justify-content-center">
+                  <i class="bi bi-ticket-perforated fs-4"></i>
+                </div>
+              </div>
+              <div class="col align-self-center ps-0">
+                <h6 class="mb-1 text-color-theme font-weight-bold">{{ t.title }}</h6>
+                <p class="text-muted small mb-0">{{ t.description }}</p>
+                <div class="mt-1">
+                  <span class="text-color-theme font-weight-bold">₹{{ t.rate }}</span>
+                  <span class="text-muted small ms-2" *ngIf="t.mrp"><del>₹{{ t.mrp }}</del></span>
+                </div>
+              </div>
+              <div class="col-auto">
+                <div class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input"
+                         [checked]="selectedTicketId === t.id"
+                         (change)="selectTicket(t.id)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quantity Selector & Action Button -->
+      <div class="card my-4 border-0 shadow-sm" *ngIf="tickets.length > 0">
+        <div class="card-body">
+          <div class="row align-items-center mb-3">
+            <div class="col">
+              <h6 class="mb-0 text-color-theme font-weight-bold">Number of Tickets</h6>
+              <p class="text-muted small mb-0">Adjust ticket quantity</p>
+            </div>
+            <div class="col-auto">
+              <div class="input-group align-items-center">
+                <button class="btn btn-outline-default btn-sm px-3 rounded-circle font-weight-bold" type="button" (click)="decreaseQty()">-</button>
+                <span class="px-3 font-weight-bold text-color-theme" style="font-size: 1.2rem;">{{ quantity }}</span>
+                <button class="btn btn-outline-default btn-sm px-3 rounded-circle font-weight-bold" type="button" (click)="increaseQty()">+</button>
+              </div>
+            </div>
+          </div>
+          
+          <button (click)="onProceed()" class="btn btn-lg btn-default w-100 shadow rounded" [disabled]="!selectedTicketId">
+            Proceed to Booking
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

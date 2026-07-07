@@ -1,0 +1,109 @@
+<!-- welcome user -->
+<div class="row mb-4">
+  <div class="col-auto">
+    <div class="avatar avatar-50 shadow rounded-10">
+      <img
+        [src]="(customer$ | async)?.image ? (customer$ | async)?.image : 'assets/img/user1.jpg'"
+        alt="Customer Avatar"
+      />
+    </div>
+  </div>
+  <div class="col align-self-center ps-0">
+    <h4 class="text-color-theme">
+      <span class="fw-normal">Hi</span>, {{ (customer$ | async)?.name | uppercase }}
+    </h4>
+    <p class="text-muted">Welcome to Apna Entry</p>
+  </div>
+</div>
+
+<!-- banners -->
+<div class="row mb-3" *ngIf="banners.length > 0">
+  <div class="col-12">
+    <swiper class="bannerswiper" [slidesPerView]="1" [spaceBetween]="10" [pagination]="true">
+      <ng-template swiperSlide *ngFor="let banner of banners">
+        <img
+          [src]="banner.bannerImage || banner.image"
+          [alt]="banner.title"
+          class="img-fluid rounded-15 shadow-sm"
+          style="width: 100%; max-height: 160px; object-fit: cover;"
+        />
+      </ng-template>
+    </swiper>
+  </div>
+</div>
+
+<!-- categories tags slider -->
+<div class="row mb-3" *ngIf="categories.length > 0">
+  <div class="col-12 px-0">
+    <swiper class="tagsswiper" [slidesPerView]="'auto'" [spaceBetween]="10" [pagination]="false">
+      <ng-template swiperSlide>
+        <div class="tag font-weight-bold" [class.active]="selectedCategoryId === null" (click)="showAll()">
+          ALL
+        </div>
+      </ng-template>
+      <ng-template swiperSlide *ngFor="let cat of categories">
+        <div class="tag font-weight-bold" [class.active]="selectedCategoryId === cat.id" (click)="filterByCategory(cat.id)">
+          {{ cat.name | uppercase }}
+        </div>
+      </ng-template>
+    </swiper>
+  </div>
+</div>
+
+<!-- events list section -->
+<div class="row">
+  <div class="col-12">
+    <h5 class="text-color-theme mb-3 font-weight-bold">Upcoming Events</h5>
+  </div>
+
+  <div class="col-12" *ngIf="loadingEvents">
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <p class="text-muted mt-2">Loading events list...</p>
+    </div>
+  </div>
+
+  <div class="col-12" *ngIf="!loadingEvents && filteredEvents.length === 0">
+    <p class="text-center text-muted py-5">No events available in this category.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mb-3" *ngFor="let event of filteredEvents">
+    <div class="card mb-2 overflow-hidden shadow-sm border-0 h-100">
+      <div class="row g-0 h-100">
+        <div class="col-4 position-relative" style="min-height: 110px">
+          <div class="coverimg h-100 w-100 position-absolute start-0 top-0"
+               [style.background-image]="'url(' + (event.eventImg || event.image || 'assets/img/news1.jpg') + ')'"
+               style="background-size: cover; background-position: center">
+          </div>
+        </div>
+        <div class="col-8 d-flex flex-column pl-0">
+          <div class="card-body d-flex flex-column justify-content-between h-100 p-3">
+            <div>
+              <span class="badge bg-light text-color-theme mb-1">
+                <i class="bi bi-geo-alt"></i> {{ event.city }}, {{ event.state }}
+              </span>
+              <a [routerLink]="['/customer/event', event.id]" class="h6 text-normal d-block text-color-theme mb-1 font-weight-bold" style="text-decoration: none;">
+                {{ event.title }}
+              </a>
+              <p class="text-muted small mb-2 text-truncate-2">{{ event.description }}</p>
+            </div>
+            <div class="row align-items-center">
+              <div class="col">
+                <p class="mb-0 text-color-theme font-weight-bold">
+                  From ₹{{ event.price || event.cost }}
+                </p>
+              </div>
+              <div class="col-auto">
+                <a [routerLink]="['/customer/event', event.id]" class="btn btn-default btn-sm rounded px-3">
+                  Book
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

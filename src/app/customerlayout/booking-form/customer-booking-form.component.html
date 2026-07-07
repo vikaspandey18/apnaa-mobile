@@ -1,0 +1,83 @@
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-5 mx-auto">
+      
+      <!-- Event Summary Card -->
+      <div class="card mb-4 border-0 shadow-sm text-color-theme" *ngIf="event && selectedTicket">
+        <div class="card-body">
+          <h5 class="font-weight-bold mb-3">Order Summary</h5>
+          <div class="row mb-2">
+            <div class="col">
+              <span class="small text-muted d-block">EVENT</span>
+              <span class="font-weight-bold">{{ event.title }}</span>
+            </div>
+          </div>
+          <div class="row mb-2 border-top pt-2">
+            <div class="col-6">
+              <span class="small text-muted d-block">TICKET TYPE</span>
+              <span class="font-weight-bold">{{ selectedTicket.title }}</span>
+            </div>
+            <div class="col-6 text-end">
+              <span class="small text-muted d-block">QUANTITY</span>
+              <span class="font-weight-bold">{{ qty }}</span>
+            </div>
+          </div>
+          <div class="row mb-0 border-top pt-2">
+            <div class="col">
+              <span class="small text-muted d-block">TOTAL AMOUNT</span>
+              <h4 class="font-weight-bold text-primary mb-0">₹{{ totalCost }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Form -->
+      <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="text-color-theme font-weight-bold mb-3">Buyer Details</h5>
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" placeholder="Full Name" formControlName="name">
+            <label>Customer Name *</label>
+            <div *ngIf="bookingForm.controls.name.touched && bookingForm.controls.name.invalid" class="text-danger small mt-1">
+              Customer name is required.
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="tel" class="form-control" placeholder="Mobile Number" formControlName="mobile">
+            <label>Customer Mobile No *</label>
+            <div *ngIf="bookingForm.controls.mobile.touched && bookingForm.controls.mobile.invalid" class="text-danger small mt-1">
+              Valid 10-digit mobile number is required.
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" placeholder="Email Address" formControlName="email">
+            <label>Customer Email (Optional)</label>
+            <div *ngIf="bookingForm.controls.email.touched && bookingForm.controls.email.invalid" class="text-danger small mt-1">
+              Please enter a valid email.
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" placeholder="Add any special notes..." formControlName="notes">
+            <label>Customer Notes</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="mb-4">
+        <button type="submit" [disabled]="bookingForm.invalid || isSubmitting" class="btn btn-default btn-lg w-100 shadow rounded">
+          {{ isSubmitting ? 'Processing Payment...' : 'Pay & Book tickets' }}
+        </button>
+
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3 py-2 text-center small shadow-sm">
+          {{ errorMessage }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>

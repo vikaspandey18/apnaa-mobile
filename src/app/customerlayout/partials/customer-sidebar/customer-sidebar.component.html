@@ -1,0 +1,67 @@
+<div class="closemenu text-muted" (click)="menuclose()">Close Menu</div>
+<div class="sidebar dark-bg">
+  <!-- user information -->
+  <div class="row my-3">
+    <div class="col-12">
+      <div class="card shadow-sm bg-opac text-white border-0">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-auto">
+              <figure class="avatar avatar-44 rounded-15">
+                <img
+                  [src]="(customer$ | async)?.image ? (customer$ | async)?.image : 'assets/img/user1.jpg'"
+                  alt="Customer Avatar"
+                />
+              </figure>
+            </div>
+            <div class="col px-0 align-self-center">
+              <p class="mb-1">{{ (customer$ | async)?.name | uppercase }}</p>
+              <p class="text-muted size-12">{{ (customer$ | async)?.mobile }}</p>
+            </div>
+            <div class="col-auto">
+              <button (click)="logout()" class="btn btn-44 btn-light">
+                <i class="bi bi-box-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- user menu navigation -->
+  <div class="row">
+    <div class="col-12">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            routerLink="/customer/home"
+            routerLinkActive="active"
+            (click)="menuclose()"
+          >
+            <div class="avatar avatar-40 rounded icon">
+              <i class="bi bi-house-door"></i>
+            </div>
+            <div class="col">Home</div>
+            <div class="arrow"><i class="bi bi-chevron-right"></i></div>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/customer/my-orders"
+            routerLinkActive="active"
+            (click)="menuclose()"
+          >
+            <div class="avatar avatar-40 rounded icon">
+              <i class="bi bi-journal-text"></i>
+            </div>
+            <div class="col">My Orders</div>
+            <div class="arrow"><i class="bi bi-chevron-right"></i></div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

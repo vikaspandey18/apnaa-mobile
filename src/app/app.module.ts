@@ -92,6 +92,7 @@ import { ClientviewtransactionComponent } from './apphomelayout/alltransaction/c
 import { HomeResetPasswordComponent } from './apphomelayout/home-reset-password/home-reset-password.component';
 import { BannerComponent } from './apphomelayout/banner/banner.component';
 import { ReportComponent } from './apphomelayout/report/report.component';
+import { CustomerModule } from './customerlayout/customer.module';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -193,6 +194,7 @@ FullCalendarModule.registerPlugins([
     }),
     // NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse' }),
+    CustomerModule,
   ],
   providers: [
     {

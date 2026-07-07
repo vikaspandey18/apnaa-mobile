@@ -1,0 +1,25 @@
+<!-- Sidebar main menu -->
+<app-customer-sidebar class="sidebar-wrap sidebar-pushcontent"></app-customer-sidebar>
+<!-- Sidebar main menu ends-->
+
+<!-- Begin page -->
+<main #mainPage>
+
+    <!-- Header -->
+    <app-customer-headermenu class="header position-fixed" #HeaderEl></app-customer-headermenu>
+    <!-- Header ends -->
+
+    <!-- main page content -->
+    <div class="main-container container">
+        <div class="clearfix"></div>
+        <router-outlet></router-outlet>
+        <div class="clearfix"></div>
+    </div>
+    <!-- main page content ends -->
+
+</main>
+<!-- Page ends-->
+
+<!-- Footer -->
+<app-customer-staticfooter class="footer" #FooterEl></app-customer-staticfooter>
+<!-- Footer Ends -->
