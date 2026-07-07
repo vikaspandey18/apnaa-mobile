@@ -19,8 +19,8 @@ export class ReportEffects {
   loadReport$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadReport),
-      switchMap(() =>
-        this.reportService.getReport().pipe(
+      switchMap((action) =>
+        this.reportService.getReport(action.fromdate, action.todate).pipe(
           map((response) => loadReportSuccess({ reportData: response.data })),
           catchError((err) =>
             of(
@@ -33,4 +33,5 @@ export class ReportEffects {
       ),
     ),
   );
+
 }

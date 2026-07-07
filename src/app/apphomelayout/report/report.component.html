@@ -1,74 +1,95 @@
-<div class="row">
-  <div class="col-12 col-md-12">
-    <div class="card shadow-sm mb-4">
-      <div class="card-header border-0 bg-transparent">
-        <div class="row align-items-center">
-          <div class="col">
-            <h5 class="mb-0 text-color-theme">Activity Report</h5>
-          </div>
-          <div class="col-auto">
-            <button
-              *ngIf="!(loading$ | async)"
-              (click)="retry()"
-              class="btn btn-light btn-sm text-color-theme"
-            >
-              <i class="bi bi-arrow-clockwise"></i> Refresh
-            </button>
-          </div>
+<!-- Date Filter Section -->
+<div class="row align-items-center mb-4">
+  <div class="col-12">
+    <!-- Form using Angular Reactive Forms [formGroup] -->
+    <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+      <div class="row align-items-end">
+        
+        <!-- From Date Input Field -->
+        <div class="col-6 col-md-5">
+          <label class="small text-color-theme font-weight-bold text-uppercase">From Date</label>
+          <input type="date" class="form-control rounded" formControlName="fromdate">
         </div>
-      </div>
-
-      <div class="card-body">
-        <!-- Loading State -->
-        <div *ngIf="loading$ | async" class="text-center py-4">
-          <div class="spinner-border text-primary mb-3" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <p class="text-muted mb-0">Fetching latest report data...</p>
+        
+        <!-- To Date Input Field -->
+        <div class="col-6 col-md-5">
+          <label class="small text-color-theme font-weight-bold text-uppercase">To Date</label>
+          <input type="date" class="form-control rounded" formControlName="todate">
         </div>
-
-        <!-- Error State -->
-        <div *ngIf="!(loading$ | async) && (error$ | async) as error" class="alert alert-danger shadow-sm text-center py-4 my-2">
-          <i class="bi bi-exclamation-triangle-fill text-danger display-4 mb-2 d-block"></i>
-          <h6 class="alert-heading text-danger">Failed to Load Report</h6>
-          <p class="mb-3">{{ error }}</p>
-          <button (click)="retry()" class="btn btn-danger btn-sm px-4">
-            <i class="bi bi-arrow-clockwise me-1"></i> Retry
+        
+        <!-- Submit Button -->
+        <div class="col-12 col-md-2 mt-3 mt-md-0 d-grid">
+          <button type="submit" class="btn btn-default shadow-sm rounded btn-block" [disabled]="loading$ | async">
+            Submit
           </button>
         </div>
+        
+      </div>
+    </form>
+  </div>
+</div>
 
-        <!-- Empty State -->
-        <div *ngIf="!(loading$ | async) && !(error$ | async) && !(report$ | async)" class="text-center py-4">
-          <i class="bi bi-file-earmark-bar-graph text-muted display-4 mb-2 d-block"></i>
-          <p class="text-muted mb-0">No report data is available.</p>
-        </div>
-
-        <!-- Report Table -->
-        <div *ngIf="!(loading$ | async) && !(error$ | async) && (report$ | async) as report" class="table-responsive">
-          <table class="table table-striped table-hover align-middle mb-0">
-            <thead class="table-dark">
-              <tr>
-                <th *ngFor="let header of report.headers" scope="col">{{ header }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="report.rows.length === 0">
-                <td [attr.colspan]="report.headers.length" class="text-center py-3 text-muted">
-                  No records found
-                </td>
-              </tr>
-              <tr *ngFor="let row of report.rows">
-                <td *ngFor="let cell of row">{{ cell }}</td>
-              </tr>
-            </tbody>
-            <tfoot *ngIf="report.footers && report.footers.length > 0" class="table-light fw-bold">
-              <tr>
-                <td *ngFor="let footer of report.footers">{{ footer }}</td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
+<!-- Table Results Section -->
+<div class="row">
+  <div class="col-12">
+    
+    <!-- 1. Loading State: Displayed when loading$ is true -->
+    <div *ngIf="loading$ | async" class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
       </div>
     </div>
+
+    <!-- 2. Error State: Displayed when API request fails -->
+    <div *ngIf="!(loading$ | async) && (error$ | async) as error" class="alert alert-danger shadow-sm text-center py-4 my-2">
+      <i class="bi bi-exclamation-triangle-fill text-danger display-4 mb-2 d-block"></i>
+      <h6 class="alert-heading text-danger">Failed to Load Data</h6>
+      <p class="mb-3">{{ error }}</p>
+      <button (click)="retry()" class="btn btn-danger btn-sm px-4 rounded-pill">
+        Retry
+      </button>
+    </div>
+
+    <!-- 3. Loaded State: Displayed when loading and error are clear and report is populated -->
+    <ng-container *ngIf="!(loading$ | async) && !(error$ | async) && (report$ | async) as report">
+      
+      <!-- Table Container (Horizontal Scrollable for Mobile screens) -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover text-nowrap align-middle mb-0 text-color-theme">
+          
+          <!-- Table Headers -->
+          <thead class="thead-dark">
+            <tr>
+              <th *ngFor="let header of report.headers" scope="col">{{ header }}</th>
+            </tr>
+          </thead>
+          
+          <!-- Table Body -->
+          <tbody>
+            <!-- Displayed if backend returns 0 rows -->
+            <tr *ngIf="report.rows.length === 0">
+              <td [attr.colspan]="report.headers.length" class="text-center py-4 text-muted">
+                No bookings found for the selected date range.
+              </td>
+            </tr>
+            
+            <!-- Displayed if rows exist (iterates dynamically) -->
+            <tr *ngFor="let row of report.rows">
+              <td *ngFor="let cell of row">{{ cell }}</td>
+            </tr>
+          </tbody>
+          
+          <!-- Table Footer (Summary Calculations) -->
+          <tfoot *ngIf="report.footers && report.footers.length > 0" class="thead-light font-weight-bold">
+            <tr>
+              <td *ngFor="let footer of report.footers">{{ footer }}</td>
+            </tr>
+          </tfoot>
+          
+        </table>
+      </div>
+
+    </ng-container>
+
   </div>
 </div>

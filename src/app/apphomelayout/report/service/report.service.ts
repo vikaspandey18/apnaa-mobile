@@ -11,8 +11,9 @@ import { environment } from 'src/environments/environment';
 export class ReportService {
   constructor(private http: HttpClient) {}
 
-  getReport(): Observable<ApiResposne<ReportData>> {
-    const url = `${environment.apiUrl}/report/getReport.php`;
+  getReport(fromdate: string, todate: string): Observable<ApiResposne<ReportData>> {
+    const url = `${environment.apiUrl}/report/getReport.php?fromdate=${fromdate}&todate=${todate}`;
     return this.http.get<ApiResposne<ReportData>>(url);
   }
+
 }
