@@ -115,7 +115,9 @@ export class CustomerBookingFormComponent implements OnInit {
       this.customerService.createBooking(payload).subscribe({
         next: (res) => {
           if (res.status === 'success' && res.data) {
-            this.launchRazorpay(res.data);
+            // TEMPORARY BYPASS: Directly call verifyPayment with a dummy payment ID to simulate success
+            this.verifyPayment(res.data.booking_id, 'pay_dummy_' + Date.now());
+            // this.launchRazorpay(res.data);
           } else {
             this.isSubmitting = false;
             this.errorMessage = res.message || 'Failed to initialize booking transaction.';
