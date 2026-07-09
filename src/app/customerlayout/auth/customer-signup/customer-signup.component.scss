@@ -1,1 +1,9 @@
-/* Customer signup page custom styles */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--fimobile-page-bg-2);
+  background: -moz-linear-gradient(45deg, var(--fimobile-page-bg-2) 0%, var(--fimobile-page-bg-1) 100%);
+  background: -webkit-linear-gradient(45deg, var(--fimobile-page-bg-2) 0%, var(--fimobile-page-bg-1) 100%);
+  background: linear-gradient(45deg, var(--fimobile-page-bg-2) 0%, var(--fimobile-page-bg-1) 100%);
+  background-attachment: fixed;
+}

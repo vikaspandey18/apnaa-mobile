@@ -1,4 +1,4 @@
-<div class="row h-100 overflow-auto align-items-center justify-content-center min-vh-100 mx-0">
+<div class="row h-100">
     <div class="col-12 text-center mb-auto px-0">
         <header class="header">
             <div class="row">
@@ -7,10 +7,8 @@
                         <i class="bi bi-arrow-left"></i>
                     </a>
                 </div>
-                <div class="col align-self-center text-center">
-                    <div class="logo-small py-3">
-                        <img src="assets/apnaentrylogobg.png" alt="Apna Logo" style="height: 50px;">
-                    </div>
+                <div class="col align-self-center">
+                    <h5>Sign up</h5>
                 </div>
                 <div class="col-auto">
                     <a class="btn btn-light btn-44 invisible"></a>
@@ -19,54 +17,48 @@
         </header>
     </div>
     <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto align-self-center text-center py-4">
-        <h1 class="mb-4 text-color-theme font-weight-bold">Customer Sign Up</h1>
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             
-            <div class="form-group form-floating mb-3">
-                <input type="text" class="form-control" id="name" placeholder="Full Name" formControlName="name">
-                <label class="form-control-label" for="name">Full Name</label>
-                <div *ngIf="signupForm.controls.name.touched && signupForm.controls.name.invalid" class="text-danger small mt-1 text-left">
-                    Name must be at least 2 characters.
-                </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" placeholder="Full Name" id="name" formControlName="name">
+                <label for="name">Full Name</label>
             </div>
-            
-            <div class="form-group form-floating mb-3">
-                <input type="tel" class="form-control" id="mobile" placeholder="Mobile Number" formControlName="mobile">
-                <label class="form-control-label" for="mobile">Mobile Number (10 digits)</label>
-                <div *ngIf="signupForm.controls.mobile.touched && signupForm.controls.mobile.invalid" class="text-danger small mt-1 text-left">
-                    Please enter a valid 10-digit mobile number.
-                </div>
+            <div *ngIf="signupForm.controls.name.touched && signupForm.controls.name.invalid" class="text-danger small mb-2 text-left">
+                Name must be at least 2 characters.
             </div>
 
-            <div class="form-group form-floating mb-3">
-                <input type="email" class="form-control" id="email" placeholder="Email Address" formControlName="email">
-                <label class="form-control-label" for="email">Email Address (Optional)</label>
-                <div *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid" class="text-danger small mt-1 text-left">
-                    Please enter a valid email address.
-                </div>
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" placeholder="Mobile Number" id="mobile" formControlName="mobile">
+                <label for="mobile">Mobile</label>
             </div>
-            
-            <div class="form-group form-floating mb-3">
-                <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
-                <label class="form-control-label" for="password">Password (min 6 chars)</label>
-                <div *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid" class="text-danger small mt-1 text-left">
-                    Password must be at least 6 characters.
-                </div>
+            <div *ngIf="signupForm.controls.mobile.touched && signupForm.controls.mobile.invalid" class="text-danger small mb-2 text-left">
+                Please enter a valid 10-digit mobile number.
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" placeholder="Email Address" id="email" formControlName="email">
+                <label for="email">Email (Optional)</label>
+            </div>
+            <div *ngIf="signupForm.controls.email.touched && signupForm.controls.email.invalid" class="text-danger small mb-2 text-left">
+                Please enter a valid email address.
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" placeholder="Password" id="password" formControlName="password">
+                <label for="password">Password</label>
+            </div>
+            <div *ngIf="signupForm.controls.password.touched && signupForm.controls.password.invalid" class="text-danger small mb-2 text-left">
+                Password must be at least 6 characters.
             </div>
 
             <button type="submit" [disabled]="loading" class="btn btn-lg btn-default w-100 mb-4 shadow">
-                {{ loading ? "Signing Up..." : "Sign Up" }}
+                {{ loading ? "Signing Up..." : "Sign up" }}
             </button>
         </form>
 
-        <p class="mb-2 text-muted">Already have an account?</p>
-        <a routerLink="/customer/login" class="font-weight-bold text-primary">
-            Sign In <i class="bi bi-arrow-right"></i>
-        </a>
-
-        <div *ngIf="errorMessage" class="alert alert-danger mt-3 py-2 text-center small shadow-sm">
-            {{ errorMessage }}
+        <div *ngIf="errorMessage" class="mt-3">
+            <p class="text-danger">{{ errorMessage }}</p>
         </div>
     </div>
-    <div class="col-12 text-center mt-auto py-3"></div>
+    <div class="col-12 text-center mt-auto"></div>
 </div>
