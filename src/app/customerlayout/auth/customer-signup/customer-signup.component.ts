@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
@@ -16,12 +16,14 @@ export class CustomerSignupComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/customer/home';
     if (this.customerService.customerId) {
-      this.router.navigate(['/customer/home']);
+      this.router.navigateByUrl(returnUrl);
     }
 
     this.signupForm = this.fb.group({
@@ -32,6 +34,10 @@ export class CustomerSignupComponent implements OnInit {
     });
   }
 
+  getReturnUrl(): string | null {
+    return this.route.snapshot.queryParams['returnUrl'] || null;
+  }
+
   onSubmit() {
     this.errorMessage = null;
     if (this.signupForm.valid) {
@@ -40,7 +46,8 @@ export class CustomerSignupComponent implements OnInit {
         next: (res) => {
           this.loading = false;
           if (res.status === 'success') {
-            this.router.navigate(['/customer/home']);
+            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/customer/home';
+            this.router.navigateByUrl(returnUrl);
           } else {
             this.errorMessage = res.message || 'Registration failed. Mobile number might already be registered.';
           }

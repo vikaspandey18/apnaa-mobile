@@ -41,7 +41,7 @@
         </form>
 
         <p class="mb-2 text-muted">Don't have account?</p>
-        <a routerLink="/customer/register" target="_self" class="">
+        <a [routerLink]="['/customer/register']" [queryParams]="getReturnUrl() ? { returnUrl: getReturnUrl() } : null" target="_self" class="">
             Sign up <i class="bi bi-arrow-right"></i>
         </a>
 

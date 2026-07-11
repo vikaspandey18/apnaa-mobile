@@ -51,27 +51,37 @@
             }}</span>
           </div>
           <div class="detail-group text-end">
-            <span class="label">Paid Amount</span>
+            <span class="label">Ticket Amount</span>
             <span class="value highlight-text">{{
               transaction.rate || "0" | currency: "INR"
             }}</span>
           </div>
-          <!-- <div class="detail-group text-end">
-            <span class="label">Ticket ID</span>
-            <span class="value">{{ transaction.id }}</span>
-          </div> -->
+        </div>
+
+        <div class="detail-row mt-2">
+          <div class="detail-group">
+            <span class="label">Seat</span>
+            <span class="value">{{ transaction.noOfTicket }}</span>
+          </div>
+          <div class="detail-group text-end">
+            <span class="label">Pay Amount</span>
+            <span class="value highlight-text">{{
+              transaction.amt_note ? (transaction.amt_note | currency: "INR") : ("0" | currency: "INR")
+            }}</span>
+          </div>
+        </div>
+
+        <div class="detail-row mt-2" *ngIf="transaction.notes">
+          <div class="detail-group">
+            <span class="label">Comment / Notes</span>
+            <span class="value">{{ transaction.notes }}</span>
+          </div>
         </div>
 
         <div class="detail-row mt-2">
           <div class="detail-group">
             <span class="label">Venue</span>
             <span class="value">{{ transaction.venue }}</span>
-          </div>
-        </div>
-        <div class="detail-row mt-2">
-          <div class="detail-group">
-            <span class="label">Seat</span>
-            <span class="value">{{ transaction.noOfTicket }}</span>
           </div>
         </div>
       </div>

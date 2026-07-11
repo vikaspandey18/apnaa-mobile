@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 
 @Component({
@@ -16,19 +16,25 @@ export class CustomerSigninComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private customerService: CustomerService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    // If customer is already logged in, redirect directly to home
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/customer/home';
+    // If customer is already logged in, redirect directly
     if (this.customerService.customerId) {
-      this.router.navigate(['/customer/home']);
+      this.router.navigateByUrl(returnUrl);
     }
 
     this.loginForm = this.fb.group({
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       password: ['', Validators.required]
     });
+  }
+
+  getReturnUrl(): string | null {
+    return this.route.snapshot.queryParams['returnUrl'] || null;
   }
 
   onSubmit() {
@@ -40,7 +46,8 @@ export class CustomerSigninComponent implements OnInit {
         next: (res) => {
           this.loading = false;
           if (res.status === 'success') {
-            this.router.navigate(['/customer/home']);
+            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/customer/home';
+            this.router.navigateByUrl(returnUrl);
           } else {
             this.errorMessage = res.message || 'Login failed. Please check credentials.';
           }

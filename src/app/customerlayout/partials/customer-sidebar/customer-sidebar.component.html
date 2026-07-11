@@ -15,13 +15,16 @@
               </figure>
             </div>
             <div class="col px-0 align-self-center">
-              <p class="mb-1">{{ (customer$ | async)?.name | uppercase }}</p>
-              <p class="text-muted size-12">{{ (customer$ | async)?.mobile }}</p>
+              <p class="mb-1">{{ (customer$ | async)?.name ? ((customer$ | async)?.name | uppercase) : 'GUEST' }}</p>
+              <p class="text-muted size-12">{{ (customer$ | async)?.mobile || 'Please log in to continue' }}</p>
             </div>
             <div class="col-auto">
-              <button (click)="logout()" class="btn btn-44 btn-light">
+              <button *ngIf="customer$ | async" (click)="logout()" class="btn btn-44 btn-light">
                 <i class="bi bi-box-arrow-right"></i>
               </button>
+              <a *ngIf="!(customer$ | async)" routerLink="/customer/login" (click)="menuclose()" class="btn btn-44 btn-light">
+                <i class="bi bi-box-arrow-in-right"></i>
+              </a>
             </div>
           </div>
         </div>

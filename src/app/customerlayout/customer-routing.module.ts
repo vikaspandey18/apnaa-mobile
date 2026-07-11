@@ -1,5 +1,5 @@
 import { NgModule, Injectable } from '@angular/core';
-import { RouterModule, Routes, CanActivate, Router } from '@angular/router';
+import { RouterModule, Routes, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { CustomerlayoutComponent } from './customerlayout.component';
 import { CustomerSigninComponent } from './auth/customer-signin/customer-signin.component';
 import { CustomerSignupComponent } from './auth/customer-signup/customer-signup.component';
@@ -15,11 +15,11 @@ import { CustomerService } from 'src/app/services/customer.service';
 })
 export class CustomerAuthGuard implements CanActivate {
   constructor(private customerService: CustomerService, private router: Router) {}
-  canActivate(): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (this.customerService.customerId) {
       return true;
     }
-    this.router.navigate(['/customer/login']);
+    this.router.navigate(['/customer/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }
 }
@@ -36,7 +36,6 @@ const routes: Routes = [
   {
     path: 'customer',
     component: CustomerlayoutComponent,
-    canActivate: [CustomerAuthGuard],
     children: [
       {
         path: '',
@@ -53,15 +52,18 @@ const routes: Routes = [
       },
       {
         path: 'book/:eventId',
-        component: CustomerBookingFormComponent
+        component: CustomerBookingFormComponent,
+        canActivate: [CustomerAuthGuard]
       },
       {
         path: 'payment-success/:bookingId',
-        component: CustomerPaymentSuccessComponent
+        component: CustomerPaymentSuccessComponent,
+        canActivate: [CustomerAuthGuard]
       },
       {
         path: 'my-orders',
-        component: CustomerMyOrdersComponent
+        component: CustomerMyOrdersComponent,
+        canActivate: [CustomerAuthGuard]
       }
     ]
   }

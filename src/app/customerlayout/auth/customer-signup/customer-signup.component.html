@@ -3,7 +3,7 @@
         <header class="header">
             <div class="row">
                 <div class="col-auto">
-                    <a routerLink="/customer/login" target="_self" class="btn btn-light btn-44">
+                    <a [routerLink]="['/customer/login']" [queryParams]="getReturnUrl() ? { returnUrl: getReturnUrl() } : null" target="_self" class="btn btn-light btn-44">
                         <i class="bi bi-arrow-left"></i>
                     </a>
                 </div>
